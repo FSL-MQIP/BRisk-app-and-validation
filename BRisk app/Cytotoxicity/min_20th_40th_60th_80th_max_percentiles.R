@@ -1,0 +1,7 @@
+dat = read.csv("Cytotoxicity_data.csv")
+min(dat$Average_Cell_Viability_F)
+quantile(dat$Average_Cell_Viability_F, 0.2)
+quantile(dat$Average_Cell_Viability_F, 0.4)
+quantile(dat$Average_Cell_Viability_F, 0.6)
+quantile(dat$Average_Cell_Viability_F, 0.8)
+max(dat$Average_Cell_Viability_F)

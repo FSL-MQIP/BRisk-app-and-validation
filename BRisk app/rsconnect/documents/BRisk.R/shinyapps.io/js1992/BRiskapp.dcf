@@ -1,0 +1,12 @@
+name: BRiskapp
+title: BRiskapp
+username: js1992
+account: js1992
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 14117938
+bundleId:
+url: https://js1992.shinyapps.io/BRiskapp/
+version: 1
+asMultiple: FALSE
+asStatic: FALSE

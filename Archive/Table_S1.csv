@@ -1,0 +1,271 @@
+isolate,alternate_name,NCBI_accession,panC_group,genomospecies,isolation_source,isolation_year,normalized_cytotoxicity,nheA,nheB,nheC,nheABC,hblA,hblB,hblC,hblD,hblACD,cytK1,cytK2,hblA_L15F,hblA_V167Y,hblA_D194E,hblA_E208D,hblB_T54A,hblB_V55L,hblB_F178L,hblB_V188T,hblC_L/M197I,hblC_K270T,hblD_D140E,hblD_I321L,hblD_Q385E,nheA_E27K,nheA_P/S31T/I,nheA_N131K,nheA_I344V,nheB_T275A,nheC_A43V,nheC_G91S,nheC_T360A
+PS00077,ATCC 21929,SRR7715943,Group_clarus,B. clarus,"environment, non-food",unknown,0.324384863,1,1,1,1,1,1,1,1,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0
+PS00123,FSL H8-0481,SRR4661784,Group_I(pseudomycoides),B. pseudomycoides,environment,2006,0.965998828,0,0,1,0,1,1,1,1,1,0,0,1,0,1,0,1,1,1,1,0,1,0,0,0,NA,NA,NA,NA,NA,1,0,1
+PS00125,FSL K6-0220,SRR23629669,Group_I(pseudomycoides),B. pseudomycoides,food,2012,1.033120307,1,1,1,1,1,1,1,0,0,0,0,0,0,1,0,1,1,1,1,0,0,NA,NA,NA,0,0,0,0,1,1,1,1
+PS00126,FSL K6-1142,SRR4661782,Group_I(pseudomycoides),B. pseudomycoides,environment,2014,0.978896428,0,0,1,0,1,1,1,1,1,0,0,1,0,1,0,1,1,1,1,0,1,0,0,0,NA,NA,NA,NA,NA,1,0,1
+PS00134,FSL K6-0042,SRR23629668,Group_I(pseudomycoides),B. pseudomycoides,food,2012,1.02481909,0,0,1,0,1,1,1,1,1,0,0,1,0,1,0,1,1,1,1,0,1,0,0,0,NA,NA,NA,NA,NA,1,0,1
+PS00135,FSL M8-0543/DSM 12442,ASM16145v1,Group_I(pseudomycoides),B. pseudomycoides,"environment, non-food",1998,1.04097213,1,1,1,1,1,1,1,1,1,0,0,NA,0,1,0,1,1,1,1,NA,NA,NA,NA,NA,0,0,0,0,1,1,1,1
+PS00136,FSL H8-0534,SRR4661789,Group_I(pseudomycoides),B. pseudomycoides,environment,2006,0.979836833,1,1,1,1,1,1,0,0,0,0,0,NA,NA,NA,NA,1,1,1,1,NA,NA,NA,NA,NA,0,0,0,0,1,1,1,1
+PS00009,FSL M7-0690,SRR18750969,Group_II(mosaicus/luti),B. mosaicus,food,2011,0.041262477,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00012,MLA2C4,PRJNA484221,Group_II(mosaicus/luti),B. mosaicus,"environment, non-food",2016,0.713760974,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00047,KCTC 33711T/LMG 28874T/N24T/MCCC 1A01406T,MACG00000000,Group_II(mosaicus/luti),B. mosaicus,"environment, non-food",2017,0.776611318,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,1,1,1
+PS00048,KCTC 33710T/N35-10-2T/LMG 28875T/MCCC 1A02146T,MAOE00000000,Group_II(mosaicus/luti),B. mosaicus,"environment, non-food",2017,-0.055065612,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,1
+PS00050,KCTC 33716T/TD41T/LMG 28872T/MCCC 1A00359T,MACI00000000,Group_II(mosaicus/luti),B. luti,"environment, non-food",2017,0.088511693,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,1
+PS00052,KCTC 33717T/0711P9-1T/LMG 28877T/MCCC 1A05942T,MACF00000000,Group_II(mosaicus/luti),B. mosaicus,"environment, non-food",2017,0.274077465,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,1,1,1
+PS00082,FSL K6-0067,SRR2541605,Group_II(mosaicus/luti),B. mosaicus,food,2012,0.333001859,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,0,1
+PS00083,FSL H7-0344,SRR23629698,Group_II(mosaicus/luti),B. mosaicus,food,2005,0.224600242,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,0
+PS00088,FSL H8-0488,SRR18750946,Group_II(mosaicus/luti),B. mosaicus,environment,2006,-0.060252665,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00096,FSL H7-0444,SRR18750931,Group_II(mosaicus/luti),B. mosaicus,food,2005,0.115296575,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,1,1,1,1,1,0,1,1
+PS00104,FSL H7-0926,SRR18750930,Group_II(mosaicus/luti),B. mosaicus,food,2005,0.425508986,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00108,FSL M8-0091,SRR5189063,Group_II(mosaicus/luti),B. mosaicus,food,2012,0.24013647,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,1,0,1,1,0,1,1,1,1,1,1,1,0,1,1
+PS00113,FSL W8-0169,SRR18750928,Group_II(mosaicus/luti),B. mosaicus biovar Thuringiensis; B. Thuringiensis,food,2012,0.172171454,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,0,0,1
+PS00118,FSL H8-0268 ,SRR18750967,Group_II(mosaicus/luti),B. mosaicus,"food, pre-processed",2005,1.272846331,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00130,FSL W8-0767,SRR18750963,Group_II(mosaicus/luti),B. mosaicus,food,2012,1.080663094,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00133,FSL P2-0415,SRR18750960,Group_II(mosaicus/luti),B. mosaicus,food,2009,0.123020054,1,1,1,1,0,0,1,1,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,0,1,1,1,1,0,1,1
+PS00138,FSL K6-0069,SRR2541606,Group_II(mosaicus/luti),B. mosaicus,food,2012,0.649678769,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,1
+PS00150,FSL M7-1251,SRR18750959,Group_II(mosaicus/luti),B. mosaicus,food,2011,0.594056953,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00154,FSL P2-0558,SRR18750958,Group_II(mosaicus/luti),B. mosaicus,food,2009,0.696302818,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00156,FSL W8-0003,SRR18750956,Group_II(mosaicus/luti),B. mosaicus,food,2012,0.420241067,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00162,FSL H8-0049,SRR18750954,Group_II(mosaicus/luti),B. mosaicus,food,2005,0.268027508,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00164,FSL K6-0040,SRR18750953,Group_II(mosaicus/luti),B. mosaicus,food,2012,1.076326837,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00174,FSL J3-0123,SRR18750951,Group_II(mosaicus/luti),B. mosaicus,food,2012,0.199938984,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00193,FSL R5-0594,SRR5185018,Group_II(mosaicus/luti),B. mosaicus,food,2006,0.947309616,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1
+PS00414,CH_49,SRR13988907,Group_II(mosaicus/luti),B. mosaicus,food,2016,0.000250114,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1
+PS00416,CH_51,SRR13988905,Group_II(mosaicus/luti),B. mosaicus,food,2016,0.234440937,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00417,CH_52,SRR23629686,Group_II(mosaicus/luti),B. mosaicus,food,2016,0.351959271,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00420,CH_57,SRR13988899,Group_II(mosaicus/luti),B. mosaicus,food,2016,0.601913225,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,1,0,0,1,1
+PS00423,CH_61,SRR13988894,Group_II(mosaicus/luti),B. mosaicus,food,2016,0.578094384,1,1,1,1,1,1,0,1,0,0,1,1,1,1,1,1,1,1,1,NA,NA,1,1,1,1,0,0,1,1,0,0,1
+PS00426,CH_64,SRR13988891,Group_II(mosaicus/luti),B. mosaicus,food,2016,0.58849963,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,1,0,0,1,1
+PS00430,CH_71,SRR13988886,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.529320422,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,1,1,0,0,1
+PS00452,CH_102,SRR13988866,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.738017843,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00457,CH_107,SRR13988862,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.799835305,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,1
+PS00471,CH_126,SRR13988852,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.277336842,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,0
+PS00483,CH_143,SRR13988846,Group_II(mosaicus/luti),B. mosaicus,environment,unknown,0.177712141,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1
+PS00505,CH_178,SRR13988823,Group_II(mosaicus/luti),B. mosaicus,food,2017,0.28738809,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,1,0,0,1,1
+PS00506,CH_180,SRR13988822,Group_II(mosaicus/luti),B. mosaicus,food,2017,0.452796812,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1
+PS00515,CH_191,SRR13989006,Group_II(mosaicus/luti),B. mosaicus,food,2017,0.364955889,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,1,1,1
+PS00546,CH_372,SRR13988978,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.563904507,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,1,0,0,1,1
+PS00554,CH_382,SRR13988975,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.394594416,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,1,1,0,1,1
+PS00564,CH_399,SRR13988960,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.469759577,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1
+PS00588,CH_431,SRR23629675,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.69955101,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,0
+PS00908,FSL P2-0416,SRR13988910,Group_II(mosaicus/luti),B. mosaicus,food,2009,0.201529255,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,1,1,0,1,1,0,1,1,1,1,0,1,1
+PS00161,FSL W7-1328,SRR5185010,Group_II(mosaicus/luti),B. mosaicus,"environment, farm",2011,0.414999872,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,1
+PS00455,CH_105,SRR13988863,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.286362775,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,1,1,1,1,1,0,1,1
+PS00468,CH_123,SRR13988856,Group_II(mosaicus/luti),B. mosaicus,food,2017,-0.031470576,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,0,1,1,1,1,0,1,1
+PS00514,CH_190,SRR13989008,Group_II(mosaicus/luti),B. mosaicus,food,2017,0.186392948,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,1,1,1,1,1,0,1
+PS00517,CH_194,SRR13989004,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.574923853,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,1
+PS00518,CH_195,SRR13989003,Group_II(mosaicus/luti),B. mosaicus,food,unknown,0.234342106,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,1
+PS00036,FSL R9-6384,SRR23629699,Group_III(mosaicus),B. mosaicus subsp. cereus biovar Emeticus; B. cereus biovar Emeticus; B. Emeticus,"human, clinical",unknown,0.430128096,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,0,1
+PS00046,KCTC 33714T/MN5T/LMG 28873T/MCCC 1A00395T,MACE01000000,Group_III(mosaicus),B. mosaicus,"environment, non-food",2017,0.757760201,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,1,1,1
+PS00051,KCTC 33858T/EB422T/MCCC 1A06182T,MACD00000000,Group_III(mosaicus),B. mosaicus,"environment, non-food",2017,0.999667104,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,0,1,1,1,0,1,1
+PS00116,FSL W8-0050,SRR2541641,Group_III(mosaicus),B. mosaicus,food,2012,0.461305702,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,0,1,1,1,0,1,1
+PS00117,FSL W8-0483,SRR2541674,Group_III(mosaicus),B. mosaicus,food,2012,0.336287562,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,1
+PS00127,FSL W8-0275,SRR18750965,Group_III(mosaicus),B. mosaicus,food,2012,0.729222568,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,1
+PS00129,FSL M7-0044,SRR18750964,Group_III(mosaicus),B. mosaicus,food,2011,0.431340767,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,1
+PS00157,FSL M7-0938,SRR18750955,Group_III(mosaicus),B. mosaicus,food,2011,1.040303637,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,0,0,1
+PS00219,FSL K6-0267,SRR18750949,Group_III(mosaicus),B. mosaicus,food,2012,0.30654602,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,0,1,1,1,0,0,1
+PS00397,CH_11,SRR13988909,Group_III(mosaicus),B. mosaicus,food,2015,0.129127638,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,1,1,0,0,0,1
+PS00398,CH_16,SRR18750947,Group_III(mosaicus),B. mosaicus,food,2015,0.64920062,0,1,0,0,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,1
+PS00400,CH_21,SRR23629693,Group_III(mosaicus),B. mosaicus,food,2015,0.447210552,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,1,1,0,0,0,1
+PS00401,CH_22,SRR23629692,Group_III(mosaicus),B. mosaicus,food,2015,0.330328777,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,1,1,0,0,0,1
+PS00435,CH_79,SRR23629683,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,unknown,0.675623338,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,0,1
+PS00436,CH_80,SRR13988880,Group_III(mosaicus),B. mosaicus,food,unknown,0.379172046,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,1,1,0,1,1,1
+PS00438,CH_82,SRR23629682,Group_III(mosaicus),B. mosaicus,food,unknown,0.692074109,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,1,1
+PS00439,CH_83,SRR13988877,Group_III(mosaicus),B. mosaicus,food,unknown,0.065547827,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,1,1,0,1,1,1
+PS00440,CH_85,SRR13988875,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,unknown,unknown,0.353019981,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,0,0,1
+PS00441,CH_88,SRR18750944,Group_III(mosaicus),B. mosaicus,food,unknown,0.512721051,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,1,1,0,0,0,1
+PS00442,CH_89,SRR13988873,Group_III(mosaicus),B. mosaicus,food,unknown,0.797188552,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,0,1
+PS00443,CH_90,SRR13988872,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,unknown,0.571418351,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,0,1
+PS00445,CH_92,SRR13988870,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,unknown,0.935771762,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,1,1,1
+PS00446,CH_93,SRR13988869,Group_III(mosaicus),B. mosaicus,food,unknown,0.192847538,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,0,0,1
+PS00453,CH_103,SRR13988864,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,unknown,0.56503068,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,0,1,1
+PS00463,CH_115,SRR13988859,Group_III(mosaicus),B. mosaicus,food,unknown,0.295517325,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,1,1,1,1,0,1,1
+PS00467,CH_122,SRR13988857,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,2017,0.539134034,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,0,1
+PS00469,CH_124,SRR18750943,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,unknown,0.208928912,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,0,1
+PS00470,CH_125,SRR13988853,Group_III(mosaicus),B. mosaicus subsp. cereus biovar Emeticus; B. cereus biovar Emeticus; B. Emeticus,food,unknown,0.307196213,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,0,1
+PS00474,CH_129,SRR13988850,Group_III(mosaicus),B. mosaicus,food,unknown,0.825422513,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,0,1,1,1,0,0,1
+PS00485,CH_146,SRR13988844,Group_III(mosaicus),B. mosaicus,food,unknown,0.154833903,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,0,1,1,1,0,1,1
+PS00487,CH_149,SRR13988840,Group_III(mosaicus),B. mosaicus,environment,unknown,0.524977723,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,1,1,0,1,1,1
+PS00494,CH_161,SRR13988830,Group_III(mosaicus),B. mosaicus subsp. cereus biovar Emeticus; B. cereus biovar Emeticus; B. Emeticus,food,2017,0.374077817,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,0,1
+PS00500,CH_172,SRR23629681,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,2017,0.557514153,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,0,0,1
+PS00503,CH_176,SRR13988825,Group_III(mosaicus),B. mosaicus,food,2017,0.044206172,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,0,1,1,1,0,1,1
+PS00513,CH_189,SRR13989009,Group_III(mosaicus),B. mosaicus,food,unknown,0.715210494,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,0,1,1,1,0,1,1
+PS00520,CH_197,SRR13989002,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,unknown,0.37025741,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,0,0,1
+PS00524,CH_201,SRR13989001,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,unknown,0.274896845,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,0,0,1
+PS00525,CH_202,SRR13989000,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,unknown,0.384491928,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,0,0,1
+PS00527,CH_204,SRR13988998,Group_III(mosaicus),B. mosaicus,food,unknown,0.250423313,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,1,1,0,0,0,1
+PS00528,CH_205,SRR13988997,Group_III(mosaicus),B. mosaicus,food,unknown,0.683291915,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,1,1,1
+PS00529,CH_206,SRR13988995,Group_III(mosaicus),B. mosaicus,food,unknown,0.703856724,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,0,1,1,1
+PS00530,CH_207,SRR23629678,Group_III(mosaicus),B. mosaicus,food,unknown,0.543252113,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,0,1,1,1,0,1,1
+PS00532,CH_209,SRR13988993,Group_III(mosaicus),B. mosaicus,food,unknown,0.478225052,1,1,1,1,1,1,1,1,1,0,0,NA,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,1
+PS00534,CH_211,SRR13988992,Group_III(mosaicus),B. mosaicus,food,unknown,0.375863707,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,1,1,1
+PS00538,CH_215,SRR13988988,Group_III(mosaicus),B. mosaicus,food,unknown,0.290609559,1,1,1,1,1,1,0,1,0,0,0,0,1,1,1,1,1,1,1,NA,NA,1,1,0,1,0,1,1,0,1,1,1
+PS00543,CH_241,SRR13988982,Group_III(mosaicus),B. mosaicus biovar Emeticus; B. Emeticus,food,unknown,0.145574108,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,1,1,1,1,0,1,1
+PS00573,CH_411,SRR13988953,Group_III(mosaicus),B. mosaicus subsp. cereus biovar Emeticus; B. cereus biovar Emeticus; B. Emeticus,food,unknown,0.264926507,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,0,0,1
+PS00576,CH_414,SRR13988951,Group_III(mosaicus),B. mosaicus subsp. cereus biovar Emeticus; B. cereus biovar Emeticus; B. Emeticus,food,unknown,0.519675118,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,0,0,1
+PS00584,CH_424,SRR13988948,Group_III(mosaicus),B. mosaicus,food,unknown,-0.006154703,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,1,1,0,1,1,1
+PS00587,CH_430,SRR13988944,Group_III(mosaicus),B. mosaicus,food,unknown,0.395685842,1,1,1,1,1,1,0,1,0,0,1,1,1,1,1,1,1,1,1,NA,NA,1,1,1,1,1,1,1,1,0,1,1
+PS00589,CH_432,SRR13988942,Group_III(mosaicus),B. mosaicus subsp. cereus; B. cereus,food,unknown,0.075899482,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,0,0,0,1
+PS00023,ATCC 14579,GCA_018309165.1,Group_IV(cereus_sensu_stricto),B. cereus s.s.,unknown,unknown,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00039,FSL R9-6406,SRR6827983,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2016,1.102429602,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00040,FSL R9-6410,SRR6827982,Group_IV(cereus_sensu_stricto),B. cereus s.s.,unknown,unknown,1.1213878,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00042,FSL R9-6413,SRR6827981,Group_IV(cereus_sensu_stricto),B. cereus s.s.,"human, clinical",unknown,0.767883016,1,1,1,1,1,1,0,0,0,0,1,NA,1,1,1,1,1,1,1,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,NA
+PS00084,FSL H8-0032,SRR18750957,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,food,2005,0.024348943,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00086,FSL K6-1030,SRR4661783,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2013,0.098850307,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00087,FSL M8-0139,SRR23629687,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,food,2012,0.25569234,1,1,1,1,0,0,0,0,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,1,1,1,1,1
+PS00090,FSL M8-0473,SRR5189060,Group_IV(cereus_sensu_stricto),B. cereus s.s.,unknown,unknown,0.794421418,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00100,FSL K6-0268,SRR23629676,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2012,0.27611571,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00107,FSL M8-0546/DSM 2046/ATCC 10792,PRJNA29723,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,environment,unknown,1.078479895,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00114,FSL R5-0811,SRR5189061,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2006,0.885430569,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,NA,NA,1,1,1,1,1,1,1,1
+PS00121,FSL R7-0282,SRR5185012,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2006,0.52633327,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,NA,NA,1,1,1,1,1,1,1,1
+PS00122,FSL W8-0932,SRR18750966,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2013,0.420462397,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00131,FSL W8-0640,SRR18750962,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2012,0.741801597,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00132,FSL P4-0569,SRR18750961,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2010,0.257407724,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00141,FSL W7-1334,SRR23629667,Group_IV(cereus_sensu_stricto),B. cereus s.s.,environment,2011,0.280023555,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00143,FSL W8-0824,SRR2541693,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2012,0.981863365,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00144,FSL W7-1101,SRR5185011,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2010,0.513511381,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00152,FSL P2-0235,SRR5185023,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2009,0.249200726,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,NA,NA,1,1,1,1,1,1,1,1
+PS00163,FSL K6-0043,SRR2541604,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2012,1.205992178,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00170,FSL H7-0353,SRR18750952,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2005,0.215105781,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00185,FSL R5-0859,SRR5185016,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2006,0.796299125,1,1,1,1,1,1,0,1,0,0,1,1,1,1,1,1,1,1,1,NA,NA,1,NA,NA,1,1,1,1,1,1,1,1
+PS00189,FSL R5-0184,SRR5185020,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2006,1.133118419,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00191,FSL R5-0832,SRR5185017,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2006,0.467404978,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,NA,NA,1,1,1,1,1,1,1,1
+PS00196,FSL R5-0585,SRR5185019,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2006,0.756668148,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00197,FSL R7-0117,SRR5185013,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2006,0.612109671,1,1,1,1,1,1,0,1,0,0,1,1,1,1,1,1,1,1,1,NA,NA,1,NA,NA,1,1,1,1,1,1,1,1
+PS00208,FSL K6-3163,SRR23629694,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2014,0.928644283,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00409,CH_43,SRR13988963,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,food,2016,0.995777418,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00410,CH_45,SRR23629690,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,food,2016,1.232354223,0,1,1,1,0,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00411,CH_46,SRR23629689,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2016,1.135348529,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00412,CH_47,SRR23629688,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis,food,2016,1.320120988,1,1,1,1,0,0,1,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,0,NA,NA,NA,1,1,0,1,1,1,1,1
+PS00413,CH_48,SRR13988908,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2016,1.10996289,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1
+PS00415,CH_50,SRR13988906,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2016,0.871082687,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00422,CH_60,SRR13988896,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,food,2016,0.96509568,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00424,CH_62,SRR23629685,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,food,2016,0.887152902,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00425,CH_63,SRR13988892,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2016,0.797508769,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00427,CH_65,SRR13988890,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,food,2016,0.418467555,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00429,CH_70,SRR13988888,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2016,1.108711837,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00431,CH_73,SRR23629684,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,unknown,1.144059711,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00433,CH_76,SRR13988883,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2016,1.004747294,1,1,1,1,0,0,1,1,0,0,1,NA,NA,NA,NA,NA,NA,NA,NA,1,0,1,0,0,1,1,1,1,1,1,1,1
+PS00434,CH_78,SRR13988882,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2016,0.075457592,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1
+PS00444,CH_91,SRR13988871,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2017,1.08135718,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00451,CH_100,SRR13988867,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,food,2017,0.030151821,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00459,CH_109,SRR13988861,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2017,1.22297016,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00462,CH_114,SRR13988860,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2017,0.850807847,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00493,CH_158,SRR13988833,Group_IV(cereus_sensu_stricto),B. cereus s.s.,environment,2017,1.031100526,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00511,CH_186,SRR13989012,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,biopesticide,2017,0.918000856,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00512,CH_188,SRR23629679,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,biopesticide,2017,0.030088601,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00526,CH_203,SRR13988999,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2017,0.487624337,1,1,1,1,1,1,0,1,0,0,1,1,1,1,1,1,1,1,1,NA,NA,1,1,1,1,1,1,1,1,1,1,1
+PS00547,CH_375,SRR13988977,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2018,0.337829823,1,1,1,1,1,1,1,1,1,0,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00555,CH_383,SRR23629677,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,food,2018,0.86987541,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00569,CH_404,SRR13988956,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2018,0.819207447,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00578,CH_417,SRR13988950,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2018,0.982021372,1,1,1,1,1,0,0,1,0,0,1,1,1,1,1,NA,NA,NA,NA,NA,NA,1,1,1,1,1,1,1,1,1,1,NA
+PS00579,CH_418,SRR13988949,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,food,2018,0.798948785,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1
+PS00590,CH_433,SRR13988940,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2018,1.061250288,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00597,CH_442,SRR13988937,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2018,1.075054198,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,1
+PS00649,CH_187,SRR23629673,Group_IV(cereus_sensu_stricto),B. cereus s.s. biovar Thuringiensis; B. Thuringiensis,biopesticide,2017,0.979407183,1,1,1,1,1,1,1,1,1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00797,CH_395,SRR13988964,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,unknown,0.875589784,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00910,FSL M7-0777,SRR13988922,Group_IV(cereus_sensu_stricto),B. cereus s.s.,food,2011,0.923887369,1,1,1,1,1,1,1,1,1,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+PS00079,FSL M8-0589/BCT-7112,ASM49628v1,Group_V(toyonensis),B. toyonensis,unknown,1966,0.470574789,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00091,FSL H8-0482,SRR18750935,Group_V(toyonensis),B. toyonensis,environment,2006,0.455959844,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00094,FSL J3-0113,SRR18750932,Group_V(toyonensis),B. toyonensis,food,2012,0.233756676,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00103,FSL M8-0214,SRR5185025,Group_V(toyonensis),B. toyonensis,food,2012,0.243082246,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00418,CH_53,SRR13988903,Group_V(toyonensis),B. toyonensis biovar Thuringiensis; B. Thuringiensis,food,2016,0.587256679,1,1,1,1,1,1,1,1,1,0,0,1,1,0,0,0,0,0,0,1,1,0,1,1,1,1,1,1,1,1,1,0
+PS00491,CH_156,SRR13988835,Group_V(toyonensis),B. toyonensis,environment,unknown,0.235493338,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00504,CH_177,SRR13988824,Group_V(toyonensis),B. toyonensis,food,2017,0.653969166,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,0,1,1,0,1,0
+PS00516,CH_193,SRR13989005,Group_V(toyonensis),B. toyonensis,food,unknown,0.564298016,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,0
+PS00542,CH_221,SRR13988983,Group_V(toyonensis),B. toyonensis,food,unknown,0.95995442,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00544,CH_369,SRR13988981,Group_V(toyonensis),B. toyonensis,food,unknown,0.834854304,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,0
+PS00545,CH_371,SRR13988979,Group_V(toyonensis),B. toyonensis,food,unknown,0.559926806,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00552,CH_380,SRR13988976,Group_V(toyonensis),B. toyonensis,food,unknown,0.254174769,1,1,0,0,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,NA,NA,NA
+PS00557,CH_386,SRR13988971,Group_V(toyonensis),B. toyonensis,food,unknown,0.441024395,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00558,CH_388,SRR13988969,Group_V(toyonensis),B. toyonensis,food,unknown,0.935476935,1,1,0,0,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,NA,NA,NA
+PS00560,CH_393,SRR13988966,Group_V(toyonensis),B. toyonensis,food,unknown,0.632902309,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00561,CH_394,SRR13988965,Group_V(toyonensis),B. toyonensis,food,unknown,0.88649472,1,1,1,1,1,1,0,1,0,0,0,1,1,0,1,0,0,0,0,NA,NA,0,1,1,NA,NA,NA,NA,1,0,1,NA
+PS00562,CH_396,SRR13988962,Group_V(toyonensis),B. toyonensis,food,unknown,1.088710075,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,0
+PS00565,CH_400,SRR13988959,Group_V(toyonensis),B. toyonensis,food,unknown,0.400189738,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00566,CH_217,SRR13988986,Group_V(toyonensis),B. cytotoxicus,food,unknown,-0.050779799,1,1,1,1,1,1,1,1,1,1,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00567,CH_401,SRR13988958,Group_V(toyonensis),B. toyonensis,food,unknown,0.70780737,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00570,CH_405,SRR13988955,Group_V(toyonensis),B. toyonensis,food,unknown,0.897159982,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00572,CH_408,SRR13988954,Group_V(toyonensis),B. toyonensis,food,unknown,0.983251986,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,0
+PS00585,CH_425,SRR13988947,Group_V(toyonensis),B. toyonensis,food,unknown,0.812162715,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,0
+PS00591,CH_434,SRR13988939,Group_V(toyonensis),B. toyonensis,food,unknown,1.019134202,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00598,CH_443,SRR13988936,Group_V(toyonensis),B. toyonensis,food,unknown,0.730188471,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00619,CH_55,SRR13988901,Group_V(toyonensis),B. toyonensis,food,2016,0.583515228,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00620,CH_56,SRR23629674,Group_V(toyonensis),B. toyonensis,food,2016,0.364236363,1,1,1,1,1,1,1,1,1,0,1,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00638,CH_144,SRR13988845,Group_V(toyonensis),B. toyonensis,environment,unknown,0.825322185,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,0
+PS00639,CH_148,SRR13988841,Group_V(toyonensis),B. toyonensis,environment,unknown,0.727103751,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00640,CH_150,SRR13988839,Group_V(toyonensis),B. toyonensis,environment,unknown,0.634370737,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,NA
+PS00641,CH_152,SRR13988838,Group_V(toyonensis),B. toyonensis,environment,unknown,-0.061456795,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00642,CH_153,SRR13988837,Group_V(toyonensis),B. toyonensis,environment,unknown,0.574649605,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,0
+PS00643,CH_159,SRR13988831,Group_V(toyonensis),B. toyonensis,environment,unknown,0.559244453,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00769,FSL H8-0043,SRR18759915,Group_V(toyonensis),B. toyonensis,food,2005,0.607376635,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,NA
+PS00789,CH_370,SRR13988980,Group_V(toyonensis),B. toyonensis,food,unknown,0.703450994,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00792,CH_384,SRR13988972,Group_V(toyonensis),B. toyonensis,food,unknown,0.355074316,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00793,CH_387,SRR13988970,Group_V(toyonensis),B. toyonensis,food,unknown,0.53136218,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00795,CH_390,SRR13988968,Group_V(toyonensis),B. toyonensis,food,unknown,0.333902995,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,0
+PS00798,CH_398,SRR13988961,Group_V(toyonensis),B. toyonensis,food,unknown,0.256478174,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00799,CH_403,SRR13988957,Group_V(toyonensis),B. toyonensis,food,unknown,0.781872837,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,0
+PS00807,CH_429,SRR13988945,Group_V(toyonensis),B. toyonensis,food,unknown,1.031201731,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,0
+PS00809,CH_440,SRR13988938,Group_V(toyonensis),B. toyonensis,food,unknown,0.827269357,1,1,1,1,1,1,0,1,0,0,1,1,1,0,1,0,0,0,0,NA,NA,0,1,1,1,1,1,0,1,0,1,1
+PS00810,CH_444,SRR13988935,Group_V(toyonensis),B. toyonensis,food,unknown,0.729173469,1,1,1,1,1,1,1,1,1,0,0,1,1,0,1,0,0,0,0,1,1,0,1,1,1,1,1,0,1,0,1,1
+PS00447,CH_95,SRR13988868,Group_V(toyonensis),(Species unknown),food,unknown,0.180092542,1,1,1,1,0,0,0,0,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1,1,1,1,1,1,1,1
+PS00044,KCTC 33709T/NH24A2T/LMG 28876T/MCCC 1A04098T,MAOI00000000,Group_VI(mycoides/paramycoides),B. paramycoides,"environment, non-food",2017,0.158324752,1,1,1,1,1,1,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0
+PS00078,FSL E2-0214,SRR4661781,Group_VI(mycoides/paramycoides),B. mycoides,food,2014,0.458185938,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00081,FSL K6-0073,SRR18750968,Group_VI(mycoides/paramycoides),B. mycoides,food,2012,0.442190299,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,1,1,0,0,1,0,0,0
+PS00085,FSL H8-0063,SRR4661788,Group_VI(mycoides/paramycoides),B. mycoides,"food, pre-processed",2005,0.250959033,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0
+PS00092,FSL H7-0909,SRR4661785,Group_VI(mycoides/paramycoides),B. mycoides,"food, pre-processed",2005,0.217407373,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00095,FSL H7-0676,SRR4661786,Group_VI(mycoides/paramycoides),B. mycoides biovar Thuringiensis; B. Thuringiensis,"food, pre-processed",2005,0.381629886,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00097,FSL F4-0079,SRR4064791,Group_VI(mycoides/paramycoides),B. mycoides,food,2002,0.378748274,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00101,FSL R5-0708,SRR5189062,Group_VI(mycoides/paramycoides),B. mycoides,food,2006,0.115430572,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00105,FSL M8-0117,SRR18750929,Group_VI(mycoides/paramycoides),B. mycoides,food,2012,0.2360368,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,1,1,0,0,0,0,0,0
+PS00106,FSL M7-0109,SRR23629672,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,-0.092480673,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00110,FSL H7-0683,SRR4064645,Group_VI(mycoides/paramycoides),B. mycoides,food,2005,0.184739332,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00111,FSL M7-1219,SRR5189064,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,-0.078977063,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0
+PS00112,FSL H8-0485,SRR23629671,Group_VI(mycoides/paramycoides),B. mycoides biovar Thuringiensis; B. Thuringiensis,environment,2006,0.363003793,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,1,1,0,0,1,0,0,0
+PS00115,FSL M7-0669,SRR5189065,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,0.318119261,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00119,FSL H8-0492,SRR4661790,Group_VI(mycoides/paramycoides),B. mycoides,"food, pre-processed",2006,0.337251433,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,1,1,0,0,0,0,0,1
+PS00120,FSL W7-1108,SRR23629670,Group_VI(mycoides/paramycoides),B. mycoides,food,2010,0.088182714,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,1,0,0,1
+PS00124,FSL P2-0021,SRR5185024,Group_VI(mycoides/paramycoides),B. mycoides,food,2009,0.232211909,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0
+PS00142,FSL P4-0260,SRR5185022,Group_VI(mycoides/paramycoides),B. mycoides,food,2010,0.254665386,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0
+PS00145,FSL M7-1345,SRR5185028,Group_VI(mycoides/paramycoides),B. mycoides,food,2012,0.289281928,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0
+PS00147,FSL M7-1006,SRR5185030,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,0.130402778,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00149,FSL M7-0322,SRR5185032,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,0.28678444,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00151,FSL M7-1090,SRR5185029,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,0.040775687,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,1,1,0,0,1,0,0,1
+PS00153,FSL M7-0053,SRR4661791,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,0.601741325,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00159,FSL P4-0488,SRR23629697,Group_VI(mycoides/paramycoides),B. mycoides,food,2010,0.561877567,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00165,FSL H8-0545,SRR23629696,Group_VI(mycoides/paramycoides),B. mycoides,environment,2006,0.079863766,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0
+PS00190,FSL R5-0920,SRR5185015,Group_VI(mycoides/paramycoides),B. mycoides,food,2006,-0.117621544,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,1,1,0,0,1,0,0,0
+PS00207,FSL W8-0523,SRR18750950,Group_VI(mycoides/paramycoides),B. mycoides,food,2012,0.578061517,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,1,1,0,0,1,0,0,0
+PS00215,FSL M8-0545/DSM 11821,ASM16097v1,Group_VI(mycoides/paramycoides),B. mycoides,food,1997,0.101369831,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,0,0
+PS00220,FSL W8-0520,SRR18750948,Group_VI(mycoides/paramycoides),B. mycoides,food,2012,0.823156484,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,1,1,0,0,1,0,0,0
+PS00911,FSL H7-0912,SRR13988926,Group_VI(mycoides/paramycoides),B. mycoides,"food, pre-processed",2005,0.416725468,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00912,FSL M7-0464,SRR13988923,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,0.161766742,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00913,FSL M7-1408,SRR13988918,Group_VI(mycoides/paramycoides),B. mycoides,food,2012,0.355932569,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0
+PS00914,FSL M7-1089,SRR13988920,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,0.47460469,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,1,1,0,0,1,0,0,1
+PS00915,FSL H7-0622,SRR13988928,Group_VI(mycoides/paramycoides),B. mycoides,"food, pre-processed",2005,0.027996907,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00916,FSL M7-0877,SRR13988921,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,0.481184949,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00917,FSL M7-0051,SRR13988925,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,0.598598312,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00918,FSL P2-0349,SRR13988911,Group_VI(mycoides/paramycoides),B. mycoides,food,2009,0.370860083,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00919,FSL P2-0099,SRR13988912,Group_VI(mycoides/paramycoides),B. mycoides,food,2009,0.28200573,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,1,1,0,0,1,0,0,0
+PS00920,FSL M7-1431,SRR13988917,Group_VI(mycoides/paramycoides),B. mycoides biovar Thuringiensis; B. Thuringiensis,food,2012,0.03899766,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00921,FSL M7-1557,SRR13988914,Group_VI(mycoides/paramycoides),B. mycoides,food,2012,0.068326042,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,1,1,0,0,0,0,0,0
+PS00922,FSL P2-0011,SRR13988913,Group_VI(mycoides/paramycoides),B. mycoides,food,2009,0.065647733,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0
+PS00923,FSL M7-1554,SRR13988916,Group_VI(mycoides/paramycoides),B. mycoides,food,2012,0.393603922,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00924,FSL M7-1555,SRR13988915,Group_VI(mycoides/paramycoides),B. mycoides,food,2012,0.1110537,1,1,1,1,0,0,1,1,0,0,0,NA,NA,NA,NA,NA,NA,NA,NA,1,1,0,0,0,1,1,0,0,0,0,0,0
+PS00953,FSL M7-0402,SRR13988924,Group_VI(mycoides/paramycoides),B. mycoides,food,2011,-0.017574637,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0
+PS00466,CH_118,SRR13988858,Group_VI(mycoides/paramycoides),B. mycoides,food,2017,0.183428642,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1
+PS00481,CH_141,SRR13988848,Group_VI(mycoides/paramycoides),B. mycoides,environment,unknown,0.343181908,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1
+PS00482,CH_142,SRR13988847,Group_VI(mycoides/paramycoides),B. mycoides,environment,unknown,0.065897606,1,0,1,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,NA,NA,0,0,0,0,0,0,0,NA,0,0,0
+PS00194,FSL M8-0544/DSM 22905,ASM225094v2,Group_VII(cytotoxicus),B. cytotoxicus,food,1998,1.019894515,1,1,1,1,0,0,0,0,0,1,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0
+PS00399,CH_17,SRR18750945,Group_VII(cytotoxicus),B. cytotoxicus,food,2015,0.339836213,1,1,1,1,0,0,0,0,0,1,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0
+PS00473,CH_128,SRR13988851,Group_VII(cytotoxicus),B. cytotoxicus,food,unknown,0.366883572,1,1,1,1,0,0,0,0,0,1,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0
+PS00477,CH_134,SRR13988849,Group_VII(cytotoxicus),B. cytotoxicus,food,unknown,0.280329967,1,1,1,1,0,0,0,0,0,1,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0
+PS00535,CH_212,SRR13988991,Group_VII(cytotoxicus),B. cytotoxicus,food,unknown,-0.059133669,1,1,1,1,0,0,0,0,0,1,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0
+PS00536,CH_213,SRR13988990,Group_VII(cytotoxicus),B. cytotoxicus,food,unknown,0.734244501,1,1,1,1,0,0,0,0,0,1,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0
+PS00537,CH_214,SRR13988989,Group_VII(cytotoxicus),B. cytotoxicus,food,unknown,0.127692953,1,1,1,1,0,0,0,0,0,1,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0
+PS00539,CH_216,SRR13988987,Group_VII(cytotoxicus),B. cytotoxicus,food,unknown,-0.352816615,1,1,1,1,0,0,0,0,0,1,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0
+PS00540,CH_218,SRR13988984,Group_VII(cytotoxicus),B. cytotoxicus,food,unknown,0.512156582,1,1,1,1,0,0,0,0,0,1,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,0,0,0,0,0,0,0,0
+PS00045,KCTC 33715T/TD42T/LMG 28870T/MCCC 1A00365T,MACH00000000,Group_VIII(mycoides),B. mycoides,"environment, non-food",2017,-0.086731688,1,1,1,1,1,1,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,1,1
+PS00049,KCTC 33713T/4049T/LMG 28871T/MCCC 1A00732T,MAOC00000000,Group_VIII(mycoides),B. mycoides,"environment, non-food",2017,-0.115067403,1,1,1,1,1,1,1,1,1,0,0,1,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,1,1
+PS00489,CH_154,SRR13988836,Group_VIII(mycoides),B. mycoides,environment,unknown,0.454534537,1,1,1,1,1,1,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1
+PS00492,CH_157,SRR13988834,Group_VIII(mycoides),B. mycoides,environment,unknown,0.495492851,1,1,1,1,1,1,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,NA

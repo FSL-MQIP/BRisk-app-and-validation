@@ -14,28 +14,23 @@ library(ggplot2)
 # Load utility functions
 source("UtilityFunctions_dynamic_growth.R")
 
-# Define function to screen for emetic and anthrax risks 
-screen_risks <- function(emetic_genes, anthrax_genes) {
-  if (is.na(emetic_genes) || is.na(anthrax_genes)) {
-    emetic_risk <- "Missing Data"
-    anthrax_risk <- "Missing Data"
+# Define function to screen for emetic potential
+screen_risks <- function(emetic_genes) {
+  if (is.na(emetic_genes)) {
+    emetic_potential <- "Missing Data"
   } else {
-    if (emetic_genes %in% c("4/4()", "3/4()")) {
-      emetic_risk <- "Emetic Disease Risk"
-    } else if (emetic_genes %in% c("2/4()", "1/4()")) {
-      emetic_risk <- "Insufficient Information to Exclude Emetic Disease Risk"
+    if (emetic_genes %in% c("4/4()")) {
+      emetic_potential <- "Very High Emetic Disease Potential"
+    } else if (emetic_genes %in% c("3/4()")) {
+      emetic_potential <- "High Emetic Disease Potential"
+    } else if (emetic_genes %in% c("2/4()")) {
+      emetic_potential <- "Medium Emetic Disease Potential"
+    } else if (emetic_genes %in% c("1/4()")) {
+      emetic_potential <- "Low Emetic Disease Potential"
     } else {
-      emetic_risk <- "No Evidence of Emetic Disease Risk"
-    }
-    
-    if (anthrax_genes %in% c("3/3()", "2/3()", "1/3()")) {
-      anthrax_risk <- "Anthrax Risk"
-    } else {
-      anthrax_risk <- "No Evidence of Anthrax Risk"
+      emetic_potential <- "Negligible Emetic Disease Potential"
     }
   }
-  
-  return(list(emetic_risk = emetic_risk, anthrax_risk = anthrax_risk))
 }
 
 # Generate database 
@@ -98,8 +93,8 @@ ui <- fluidPage(
       ), # Numeric input for "initial count"
       
       div(class = "form-group",
-      numericInput("d", "Consumer home storage day:", value = 35),
-      ), # Numeric input for "storage day"
+      numericInput("d", "Shelf-life day:", value = 21),
+      ), # Numeric input for "shelf-life day"
       
       div(class = "form-group",
       selectInput("foodmatrix",
@@ -108,7 +103,11 @@ ui <- fluidPage(
       ), 
       
       div(class = "form-group",
-      fileInput("file", "Input BTyper3 result for a detected B cereus isolate"),  # BTyper3 input for a B cereus isolate
+      fileInput("file1", "BRiskTyper result"),  # BRiskTyper result
+      ),
+      
+      div(class = "form-group",
+          fileInput("file2", "FastANI result"),  # FastANI result
       ),
       
       div(class = "form-group",
@@ -117,11 +116,19 @@ ui <- fluidPage(
       ),
     
     mainPanel(
-      plotOutput("hist1"),
-      htmlOutput("riskOutput"),
-      plotOutput("hist2")
-    )
+      fluidRow(
+        column(width = 12,plotOutput("hist1"))
+      ),
+      
+      fluidRow(
+        column(width = 12,plotOutput("hist2"))
+      ),
+      
+      fluidRow(
+        column(width = 12, uiOutput("summary_text"))
+      )
   )
+ )
 )
 
 # Define server
@@ -129,8 +136,8 @@ server <- function(input, output) {
   
   # Input BTyper3 result for a B cereus isolate 
   data <- reactive({
-    req(input$file)
-    df <- read.csv(input$file$datapath)
+    req(input$file1, input$file2)
+    df <- read.csv(input$file1$datapath)
     
     df <- df %>% 
       separate(Closest_Type_Strain.ANI., into = c("species","ANI"), sep = "\\(") %>%
@@ -139,35 +146,44 @@ server <- function(input, output) {
              panC_Group = gsub("\\)", "", panC_Group),
              predicted_species = gsub("\\)", "", predicted_species))
     
-    colnames(df)[8] <- "anthrax_genes"
     colnames(df)[9] <- "emetic_genes"
+    
+    # Input BTyper3 result for ANI
+    ANI_file <- read.csv(input$file2$datapath, header = FALSE)
+    colnames(ANI_file) <- c("query", "reference", "ANI", "matched_genes", "total_genes")
+    ANI_file <- ANI_file[, c("reference", "ANI")]
+    ANI_file$reference <- sub("^(PS\\d+).*", "\\1", ANI_file$reference)
+    ANI_file$num_id <- as.numeric(sub("PS", "", ANI_file$reference))
+    ANI_file <- ANI_file[order(ANI_file$num_id), ]
+    ANI_file <- ANI_file[, c("reference", "ANI")]
     
     # Input for risk text 
     emetic_genes <- df$emetic_genes
-    anthrax_genes <- df$anthrax_genes
     
     # Filter the database input for rows with the same species as the BTyper3 input
     df$species <- trimws(df$species)
+    database$ANI_new = ANI_file$ANI #Adding new ANI
     matching_species_df <- subset(database, species == df$species)
+    # Assigning ANI weight 
+    matching_species_df$ANI_wght <- matching_species_df$ANI_new / sum(matching_species_df$ANI_new)
     
-    # Simulate HTST milk products along the supply chain 
+    # Simulate HTST milk products along the supply chain
     ## Set seed
     set.seed(1)
     
-    ## Randomly assign isolate names to 1000*length(isolates) units of HTST milk products
-    ## All isolates from the same species are equally represented
-    isolates <- matching_species_df$Isolate.Name
-    sampled_isolates <- character()
-    for (isolate in isolates) {
-      sampled_isolates <- c(sampled_isolates, rep(isolate, 1000))
+    ## Assign isolate names to 10000 units of HTST milk products
+    ## Isolates from the same species are represented by weight determined by ANI
+    n_sim = 10000
+    matching_species_df$n_units <- round(n_sim * matching_species_df$ANI_wght)
+    sampled_isolates <- rep(matching_species_df$Isolate.Name, matching_species_df$n_units)
+    if(length(sampled_isolates) != n_sim){
+      sampled_isolates <- sample(sampled_isolates, n_sim)
     }
-    sampled_isolates <- sample(sampled_isolates)
     
-    ## Set up dataframe for modeling 1000*length(isolates) units of HTST milk products
-    n_sim = 1000*length(isolates)
-    ModelData = data.frame(unit_id = rep(seq(1,n_sim)))
-    ModelData$isolate <- sampled_isolates
-    
+    ModelData <- data.frame(
+      unit_id = seq_len(n_sim),
+      isolate = sampled_isolates
+    )
     # Stage 1: facility storage 
     ## (a)  Sample the temperature distribution
     ModelData$T_F <- rep(runif(n_sim,min=3.5,max=4.5)) #uniform distribution
@@ -203,11 +219,12 @@ server <- function(input, output) {
       temps[i] <- number
     }
     ModelData$T_H <- temps
-    ## (b) Define t_H as 35 days for all units
-    ModelData$t_H <- rep(input$d, each = n_sim)
     
-    ## Model temperature profiles of 1000*length(isolates) units HTST milk 
-    env_cond_time <- matrix(c(rep(0,1000*length(isolates)),
+    ## (b) Define t_H as 35 days for all units
+    ModelData$t_H <- rep(35, each = n_sim)
+    
+    ## Model temperature profiles of 1000 units HTST milk 
+    env_cond_time <- matrix(c(rep(0,n_sim),
                               ModelData$t_F, 
                               ModelData$t_F+0.001,
                               ModelData$t_F + ModelData$t_T,
@@ -229,12 +246,8 @@ server <- function(input, output) {
                               ModelData$T_H,
                               ModelData$T_H), ncol = 10)
     
-    # Assign serving size (ml) to 1000*length(isolates) units of HTST milk 
-    serving.size<-sample(x = c(rep(x = 244,50),rep(245,25),rep(488,20),rep(732,5)),size = 1000*length(isolates),replace = TRUE)
-    ModelData$serving.size = serving.size*0.97
-    
     ## Generate simulation input 
-    ## Assign growth parameters to 1000*length(isolates) units of HTST milk 
+    ## Assign growth parameters to 10000 units of HTST milk 
     ModelData$index = match(ModelData$isolate, matching_species_df$Isolate.Name)
     ModelData$Q0 = matching_species_df$Q0[ModelData$index]
     ModelData$Nmax = matching_species_df$Nmax[ModelData$index]
@@ -251,25 +264,28 @@ server <- function(input, output) {
     ModelData$mu_opt = (ModelData$b*(ModelData$Topt-ModelData$Tmin))^2
     
     # Run simulation
-    for (i in 1:nrow(ModelData)){
+    my_times <- seq(0,35)
+    num_iterations <- nrow(ModelData)
+    all_simulations <- list()
+    for (i in 1:num_iterations) {
       my_primary <- list(mu_opt = ModelData$mu_opt[i], Nmax = ModelData$Nmax[i], N0 = ModelData$N0[i], Q0 = ModelData$Q0[i])
       sec_temperature <- list(model = "reducedRatkowsky", xmin = ModelData$Tmin[i], b = ModelData$b[i], clade = ModelData$Clade[i])
       my_secondary <- list(temperature = sec_temperature)
-      growth <- predict_dynamic_growth(times = env_cond_time[i,],
+      growth <- predict_dynamic_growth(times = my_times,
                                        env_conditions = tibble(time = env_cond_time[i,],
                                                                temperature = env_cond_temp[i,]),
                                        my_primary,
                                        my_secondary)
       sim <- growth$simulation
-      ModelData$conc[i] = tail(sim$logN, 1)
+      all_simulations[[i]] <- sim
     }
     
-    ModelData$realCFU = 10^ModelData$conc
-    ModelData$CFU_per_serve = ModelData$realCFU*ModelData$serving.size
-    log_CFU_per_serving <- log10(ModelData$CFU_per_serve)
+    final_conc <- do.call(rbind, all_simulations)
+    dat <- final_conc
+    dat_end_of_shelf = subset(dat, time == input$d)
     
     # Return the required data frame
-    return(list(df1 =data.frame(ModelData, log_CFU_per_serving),
+    return(list(df1 = dat_end_of_shelf,
                 df2 = df,
                 df3 = cytotoxicity_input))
     })
@@ -278,20 +294,27 @@ server <- function(input, output) {
   output$hist1 <- renderPlot({
     req(data())
     df1 <- data()$df1
-    df1$color<-ifelse(test = df1$log_CFU_per_serving>=5,yes = "Above 5 log",no = 
-                           ifelse(df1$log_CFU_per_serving>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
-    min_value <- min(df1$log_CFU_per_serving)
-    max_value <- max(df1$log_CFU_per_serving)
-    breaks <- seq(floor(min_value), ceiling(max_value) + 0.1, by = 0.1)
-    finalhist<-ggplot(data = df1,aes(x = log_CFU_per_serving))
+    df1$color<-ifelse(test = df1$logN>=5,yes = "Above 5 log",no = 
+    ifelse(df1$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
+    df1$color <- factor(
+      df1$color,
+      levels = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
+    )
+    breaks <- seq(0, 10, by = 0.5)
+    finalhist<-ggplot(data = df1,aes(x = logN))
     finalhist<-finalhist+
       geom_histogram(data = df1,aes(fill=color),binwidth = 0.1, breaks = breaks)+
-      scale_fill_manual("B cereus count per serving", 
-                        values = c("Above 5 log"="red3","Between 3 and 5 log"="darkorange1","Below 3 log"="springgreen3"))+
-      xlab("CFU per Serving (log scale)") +
-      ylab("Number of Servings") +
-      ggtitle("Distribution of B cereus count (cfu/serving) in HTST milk products") +
-      theme_minimal() + 
+      scale_fill_manual(name = expression (italic(B~cereus)~"count per ml"), 
+                        values = c("Below 3 log"="springgreen3","Between 3 and 5 log"="darkorange1","Above 5 log"="red3"),
+                        breaks = c("Below 3 log", "Between 3 and 5 log", "Above 5 log"))+
+      xlab("log CFU per ml") +
+      ylab("Number of Units (log scale)") +
+      ggtitle(expression("Distribution of " * italic("B. cereus") * " count (log CFU per ml) in HTST milk products")) +
+      scale_y_log10(
+        breaks = scales::trans_breaks("log10", function(x) 10^x),
+        labels = scales::trans_format("log10", scales::math_format(10^.x))
+      ) +
+      theme_classic() + 
       theme(plot.title = element_text(size = 24, face = "bold"),       
             axis.title.x = element_text(size = 22),                    
             axis.title.y = element_text(size = 22),  
@@ -302,25 +325,7 @@ server <- function(input, output) {
     return(finalhist)
   })
   
-  # Generate risk text
-  output$riskOutput <- renderUI({
-    req(data())
-    df2 <- data()$df2
-    emetic_genes <- df2$emetic_genes
-    anthrax_genes <- df2$anthrax_genes
-    risk_result <- screen_risks(emetic_genes, anthrax_genes)
-    
-    # Generate risk text
-    risk_text <- HTML(paste("<div style='position: absolute; top: 800px; left: 20px;'>",
-                            "<h2> This is an isolate from phylogenetic <b>", df2$panC_Group,
-                            "</b></h2><h2>With <b><span style='color: darkred;'>", risk_result$emetic_risk, 
-                            "</span></b></h2><h2> And <b><span style='color: darkred;'>", risk_result$anthrax_risk, 
-                            "</div>", sep = ""))
-    
-    return(risk_text)
-  })
-  
-  # Generate a histogram for the distribution of normalized cytotoxicity for diarrheal risk 
+  # Generate a histogram for the distribution of normalized cytotoxicity
   output$hist2 <- renderPlot({
     req(data())
     df2 <- data()$df2
@@ -336,10 +341,9 @@ server <- function(input, output) {
       geom_histogram(data = matching_species_df_ct1, aes(x = Normalized_Cytotoxicity, fill = "Phylogenetic Group"), binwidth = 0.05) +
       xlab("Cytotoxicity Value") +
       ylab("Number of Isolates") +
-      ggtitle(paste("Histogram of Cytotoxicity Values for All Isolates and Phylogenetic", df2$panC_Group, 
-                    "\n", 
-                    "(Diarrheal Disease Risk Assessment)")) + 
-      theme_minimal() +
+      ggtitle(paste("Cytotoxicity Distribution of All Isolates and Phylogenetic", df2$panC_Group, 
+                    "\n")) + 
+      theme_classic() +
       theme(plot.title = element_text(size = 24, face = "bold"),       
             axis.title.x = element_text(size = 22),                    
             axis.title.y = element_text(size = 22),  
@@ -350,7 +354,197 @@ server <- function(input, output) {
                         labels = c("All Isolates", paste("Phylogenetic", df2$panC_Group, sep = " "))) +
       labs(fill = "")
   })
-}    
+  
+  # Generate text output
+  output$summary_text <- renderUI({
+    req(data())
+    df1<- data()$df1
+    df2 <- data()$df2
+    df3 <- data()$df3
+    
+    # exposure 
+    logN <- df1$logN
+    pct_above5 <- sum(logN > 5, na.rm = TRUE)/10000 * 100
+    
+    exposure <- if (pct_above5 >= 1) {
+      "Very High Exposure"
+    } else if (any(logN > 5, na.rm = TRUE)) {
+      "High Exposure"
+    } else if (any(logN > 3 & logN < 5, na.rm = TRUE)) {
+      "Medium Exposure"
+    } else if (all(logN < 3, na.rm = TRUE)) {
+      "Low Exposure"
+    } else {
+      "Negligible Exposure"
+    }
+    
+    exposure_color <- case_when(
+      exposure == "Very High Exposure" ~ "red",
+      exposure == "High Exposure" ~ "darkorange",
+      exposure == "Medium Exposure" ~ "yellow",
+      exposure == "Low Exposure" ~ "green",
+      TRUE ~ "lightgreen"
+    )
+    
+    # emetic
+    emetic_potential <- screen_risks(df2$emetic_genes)
+    emetic_color <- case_when(
+      grepl("Very High", emetic_potential) ~ "red",
+      grepl("High", emetic_potential) ~ "darkorange",
+      grepl("Medium", emetic_potential) ~ "yellow",
+      grepl("Low", emetic_potential) ~ "green",
+      TRUE ~ "lightgreen"
+    )
+    
+    # diarrheal
+    colnames(df3)[colnames(df3) == "Average_Cell_Viability_F"] <- "Normalized_Cytotoxicity"
+    df3$panC_Group <- trimws(df3$panC_Group)
+    
+    matching <- subset(df3, panC_Group == df2$panC_Group)
+    ref_ecdf <- ecdf(df3$Normalized_Cytotoxicity)
+    
+    matching$percentile_ref <- ref_ecdf(matching$Normalized_Cytotoxicity) * 100
+    pc = median(matching$percentile_ref)
+    
+    diarrheal_potential <- case_when(
+      pc >= 80 ~ "Very High Diarrheal Disease Potential",
+      pc >= 60 ~ "High Diarrheal Disease Potential",
+      pc >= 40 ~ "Medium Diarrheal Disease Potential",
+      pc >= 20 ~ "Low Diarrheal Disease Potential",
+      TRUE ~ "Very Low Diarrheal Disease Potential"
+    )
+    
+    diarrheal_color <- case_when(
+      grepl("Very High", diarrheal_potential) ~ "red",
+      grepl("High", diarrheal_potential) ~ "darkorange",
+      grepl("Medium", diarrheal_potential) ~ "yellow",
+      grepl("Low", diarrheal_potential) ~ "green",
+      TRUE ~ "lightgreen"
+    )
+    
+    # final risk score
+    if (exposure == "Negligible Exposure" ||
+        emetic_potential == "Negligible Emetic Disease Potential") {
+      emetic_risk <- "Negligible Emetic Disease Risk"
+    } else if (emetic_potential == "Low Emetic Disease Potential" &&
+               exposure == "Low Exposure") {
+      emetic_risk <- "Low Emetic Disease Risk"
+    } else if (emetic_potential == "Low Emetic Disease Potential" &&
+               (exposure == "Medium Exposure" || exposure == "High Exposure")) {
+      emetic_risk <- "Medium Emetic Disease Risk"
+    } else if (emetic_potential == "Medium Emetic Disease Potential" &&
+               (exposure == "Low Exposure" || exposure == "Medium Exposure")) {
+      emetic_risk <- "Medium Emetic Disease Risk"
+    } else if (emetic_potential == "High Emetic Disease Potential" &&
+               exposure == "Low Exposure") {
+      emetic_risk <- "Medium Emetic Disease Risk"
+    } else if (exposure == "Very High Exposure" &&
+               emetic_potential == "High Emetic Disease Potential") {
+      emetic_risk <- "Very High Emetic Disease Risk"
+    } else if (emetic_potential == "Very High Emetic Disease Potential" &&
+               (exposure == "Medium Exposure" ||
+                exposure == "High Exposure" ||
+                exposure == "Very High Exposure")) {
+      emetic_risk <- "Very High Emetic Disease Risk"
+    } else {
+      emetic_risk <- "High Emetic Disease Risk"
+    }
+    
+    if (exposure == "Negligible Exposure") {
+      diarrheal_risk <- "Negligible Diarrheal Disease Risk"
+    } else if (
+      (exposure == "Very High Exposure" &&
+       diarrheal_potential == "High Diarrheal Disease Potential") ||
+      (diarrheal_potential == "Very High Diarrheal Disease Potential" &&
+       exposure %in% c("Medium Exposure", "High Exposure", "Very High Exposure"))
+    ) {
+      diarrheal_risk <- "Very High Diarrheal Disease Risk"
+    } else if (
+      (diarrheal_potential == "Very Low Diarrheal Disease Potential" &&
+       exposure %in% c("Low Exposure", "Medium Exposure")) ||
+      (diarrheal_potential == "Low Diarrheal Disease Potential" &&
+       exposure == "Low Exposure")
+    ) {
+      diarrheal_risk <- "Low Diarrheal Disease Risk"
+    } else if (
+      (exposure == "Very High Exposure" &&
+       diarrheal_potential %in% c("Low Diarrheal Disease Potential",
+                                  "Medium Diarrheal Disease Potential")) ||
+      (exposure == "High Exposure" &&
+       diarrheal_potential %in% c("Medium Diarrheal Disease Potential",
+                                  "High Diarrheal Disease Potential")) ||
+      (exposure == "Medium Exposure" &&
+       diarrheal_potential == "High Diarrheal Disease Potential") ||
+      (exposure == "Low Exposure" &&
+       diarrheal_potential == "Very High Diarrheal Disease Potential")
+    ) {
+      diarrheal_risk <- "High Diarrheal Disease Risk"
+    } else {
+      diarrheal_risk <- "Medium Diarrheal Disease Risk"
+    }
+    
+    risk_color_emetic <- if (emetic_risk == "Very High Emetic Disease Risk") {
+      "red"
+    } else if (emetic_risk == "High Emetic Disease Risk") {
+      "darkorange"
+    } else if (emetic_risk == "Medium Emetic Disease Risk") {
+      "yellow"
+    } else if (emetic_risk == "Low Emetic Disease Risk") {
+      "green"
+    } else {
+      "lightgreen"
+    }
+    
+    risk_color_diarrheal <- if (diarrheal_risk == "Very High Diarrheal Disease Risk") {
+      "red"
+    } else if (diarrheal_risk == "High Diarrheal Disease Risk") {
+      "darkorange"
+    } else if (diarrheal_risk == "Medium Diarrheal Disease Risk") {
+      "yellow"
+    } else if (diarrheal_risk == "Low Diarrheal Disease Risk") {
+      "green"
+    } else {
+      "lightgreen"
+    }
+    
+    # print text
+    HTML(paste0(
+      "<div>",
+      
+      "<p style='color:black; font-weight:bold; font-size:22px;'>",
+      "Summary Report",
+      "</p>",
+      
+      "<p style='color:", exposure_color, "; font-weight:bold; font-size:20px;'>",
+      exposure,
+      "</p>",
+      
+      "<p style='color:", emetic_color, "; font-weight:bold; font-size:20px;'>",
+      emetic_potential,
+      "</p>",
+      
+      "<p style='color:", diarrheal_color, "; font-weight:bold; font-size:20px;'>",
+      diarrheal_potential,
+      "</p>",
+      
+      "<hr>",
+      
+      "<p style='color:black; font-weight:bold; font-size:20px;'>",
+      "Overall Risk Score:",
+      "</p>",
+      
+      "<p style='color:", risk_color_emetic, "; font-weight:bold; font-size:18px;'>",
+      emetic_risk,
+      "</p>",
+      
+      "<p style='color:", risk_color_diarrheal, "; font-weight:bold; font-size:18px;'>",
+      diarrheal_risk,
+      "</p>",
+      
+      "</div>"
+    ))
+  })
+}
 
 # Run the application 
 shinyApp(ui = ui, server = server)

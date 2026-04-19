@@ -133,7 +133,7 @@ run_simulation <- function(final_file, ani_file, isolate_id, N0_value, t_H) {
   ## Stage 5: home storage 
   ## (a)  Sample the temperature distribution
   ModelData$T_H <- 10
-  ## (b) Define t_H as 35 days for all units
+  ## (b) Define t_H (in days) as consumer home storage days
   ModelData$t_H <- rep(t_H, each = n_sim)
   
   ## Model temperature profiles of 10,000 units HTST milk 
@@ -222,3 +222,29 @@ results_list <- future_pmap(
 
 # Combine results
 final_results <- bind_rows(results_list)
+
+# Summary stats
+summary_stats <- final_results %>%
+  group_by(isolate_id, t_H) %>%
+  summarise(
+    conc = if (n_distinct(conc) == 1) {
+      first(conc)
+    } else {
+      quantile(conc, 0.25, na.rm = TRUE)
+    },
+    .groups = "drop"
+  )
+
+df_merged <- summary_stats %>%
+  left_join(
+    N0_df,
+    by = c(
+      "isolate_id" = "Isolate",
+      "t_H" = "Consumer.storage.day"
+    )
+  )
+
+names(df_merged) <- c("isolate_id", "consumer storage day", "pred_conc", "species", "obs_conc")
+df_merged$Diff = df_merged$pred_conc - df_merged$obs_conc
+df_filtered <- df_merged %>%
+  filter(abs(Diff) > 1)

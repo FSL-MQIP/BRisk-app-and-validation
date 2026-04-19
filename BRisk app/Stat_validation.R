@@ -1,16 +1,21 @@
-library(car)
+library(lme4)
+library(lmerTest)
 
-dat = read.csv("Validation_combined.csv")
-dat$Number.of.strains = as.factor(dat$Number.of.strains)
+df = read.csv("Validation_combined.csv")
 
-anova_model_1 <- aov(Diff ~ Closest.Type.Strain, data = dat)
-qqnorm(residuals(anova_model_1))
-qqline(residuals(anova_model_1))
-leveneTest(Diff ~ Closest.Type.Strain, data = dat)
-kruskal.test(Diff ~  Closest.Type.Strain, data = dat)
+# factors
+df$Isolate <- factor(df$Isolate)
+df$Closest.Type.Strain <- factor(df$Closest.Type.Strain)
+df$Consumer.storage.day <- factor(df$Consumer.storage.day)
 
-anova_model_2 <- aov(Diff ~ Number.of.strains, data = dat)
-qqnorm(residuals(anova_model_2))
-qqline(residuals(anova_model_2))
-leveneTest(Diff ~ Number.of.strains, data = dat)
-kruskal.test(Diff ~  Number.of.strains, data = dat)
+# mixed model
+model <- lmer(Diff ~ Closest.Type.Strain + Consumer.storage.day + (1 | Isolate), data = df)
+anova(model)
+
+# assumption check
+# normality of residuals
+shapiro.test(residuals(model))
+
+# homoscedasticity
+lm_tmp <- lm(residuals(model) ~ fitted(model))
+lmtest::bptest(lm_tmp)

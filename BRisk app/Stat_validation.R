@@ -1,21 +1,25 @@
 library(lme4)
 library(lmerTest)
 
-df = read.csv("Validation_combined.csv")
+df = read.csv("Validation_result_combined.csv")
 
 # factors
-df$Isolate <- factor(df$Isolate)
-df$Closest.Type.Strain <- factor(df$Closest.Type.Strain)
-df$Consumer.storage.day <- factor(df$Consumer.storage.day)
+df$isolate_id <- factor(df$isolate_id)
+df$species <- factor(df$species)
+df$consumer.storage.day <- factor(df$consumer.storage.day)
 
 # mixed model
-model <- lmer(Diff ~ Closest.Type.Strain + Consumer.storage.day + (1 | Isolate), data = df)
+model <- lmer(Diff ~ species + consumer.storage.day + (1 | isolate_id), data = df)
 anova(model)
 
 # assumption check
-# normality of residuals
-shapiro.test(residuals(model))
+library(DHARMa)
+# residual distribution
+sim_res <- simulateResiduals(model)
+testUniformity(sim_res)
 
 # homoscedasticity
-lm_tmp <- lm(residuals(model) ~ fitted(model))
-lmtest::bptest(lm_tmp)
+testDispersion(sim_res)
+
+# outliers
+testOutliers(sim_res)

@@ -16,10 +16,4 @@ anova(model)
 library(DHARMa)
 # residual distribution
 sim_res <- simulateResiduals(model)
-testUniformity(sim_res)
-
-# homoscedasticity
-testDispersion(sim_res)
-
-# outliers
-testOutliers(sim_res)
+plot(sim_res)

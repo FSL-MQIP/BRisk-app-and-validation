@@ -10,6 +10,11 @@ library(deSolve)          # to load 'ode'
 library(rlang)
 library(ggplot2)
 
+# Parallel setup
+library(furrr)
+library(future)
+plan(multisession)
+
 # Load utility functions
 source("UtilityFunctions_dynamic_growth.R")
 
@@ -23,8 +28,29 @@ database <- database %>%
   separate(Closest_Type_Strain.ANI., into = c("species","ANI"), sep = "\\(") %>%
   mutate(ANI = gsub("\\)", "", ANI))
 
-# Input BTyper3 result for a B cereus isolate 
-df <- read.csv("Genomic data for detected isolates/PS00597_contigs_final_results.csv")
+# Input BRiskTyper intermediate outputs for all 22 B cereus group isolates
+N0_df <- read.csv("Raw_data_validation.csv")
+N0_df_sub <- subset(N0_df, Consumer.storage.day == 0) # just to get the order of isolates
+
+cases <- data.frame(
+  id = N0_df_sub$Isolate
+) %>%
+  mutate(
+    final_file = sprintf(
+      "Genomic data for detected isolates/%s_contigs_final_results.csv",
+      id
+    ),
+    ani_file = sprintf(
+      "Genomic data for detected isolates/%s_contigs_cytotoxicity_fastani.csv",
+      id
+    )
+  )
+
+# Parallel simulation function 
+run_simulation <- function(final_file, ani_file, isolate_id) {
+
+# Input BRiskTyper information on the type strain closest to the input strains  
+df <- read.csv(final_file)
 df <- df %>% 
   separate(Closest_Type_Strain.ANI., into = c("species","ANI"), sep = "\\(") %>%
   separate(Adjusted_panC_Group.predicted_species., into = c("panC_Group","predicted_species"), sep = "\\(") %>%
@@ -32,8 +58,8 @@ df <- df %>%
          panC_Group = gsub("\\)", "", panC_Group),
          predicted_species = gsub("\\)", "", predicted_species))
 
-# Input BTyper3 result for ANI
-ANI_file <- read.csv("Genomic data for detected isolates/PS00597_contigs_cytotoxicity_fastani.csv", header = FALSE)
+# Input BRiskTyper ANI similarity matrix
+ANI_file <- read.csv(ani_file, header = FALSE)
 colnames(ANI_file) <- c("query", "reference", "ANI", "matched_genes", "total_genes")
 ANI_file <- ANI_file[, c("reference", "ANI")]
 ANI_file$reference <- sub("^(PS\\d+).*", "\\1", ANI_file$reference)
@@ -45,15 +71,13 @@ ANI_file <- ANI_file[, c("reference", "ANI")]
 df$species <- trimws(df$species)
 database$ANI_new = ANI_file$ANI #Adding new ANI
 matching_species_df <- subset(database, species == df$species)
+
 # Assigning ANI weight 
 matching_species_df$ANI_wght <- matching_species_df$ANI_new / sum(matching_species_df$ANI_new)
 
-# Simulate HTST milk products along the supply chain
-## Set seed
 set.seed(1)
 
-## Assign isolate names to 10,000 units of HTST milk products
-## Isolates from the same species are represented by weight determined by ANI
+# Simulation setup
 n_sim = 10000
 matching_species_df$n_units <- round(n_sim * matching_species_df$ANI_wght)
 sampled_isolates <- rep(matching_species_df$Isolate.Name, matching_species_df$n_units)
@@ -128,7 +152,6 @@ env_cond_temp <- matrix(c(ModelData$T_F,
                           ModelData$T_H,
                           ModelData$T_H), ncol = 10)
 
-## Generate simulation input 
 ## Assign growth parameters to 10,000 units of HTST milk 
 ModelData$index = match(ModelData$isolate, matching_species_df$Isolate.Name)
 ModelData$Q0 = matching_species_df$Q0[ModelData$index]
@@ -145,96 +168,121 @@ ModelData$N0 = N0
 ModelData$Topt = sapply(ModelData$Clade, xopt_func)
 ModelData$mu_opt = (ModelData$b*(ModelData$Topt-ModelData$Tmin))^2
 
-# Run simulation
+# Parallel unit simulation
 my_times <- seq(0,35)
 num_iterations <- nrow(ModelData)
-all_simulations <- list()
-for (i in 1:num_iterations) {
-  my_primary <- list(mu_opt = ModelData$mu_opt[i], Nmax = ModelData$Nmax[i], N0 = ModelData$N0[i], Q0 = ModelData$Q0[i])
-  sec_temperature <- list(model = "reducedRatkowsky", xmin = ModelData$Tmin[i], b = ModelData$b[i], clade = ModelData$Clade[i])
-  my_secondary <- list(temperature = sec_temperature)
-  growth <- predict_dynamic_growth(times = my_times,
-                                   env_conditions = tibble(time = env_cond_time[i,],
-                                                           temperature = env_cond_temp[i,]),
-                                   my_primary,
-                                   my_secondary)
+all_simulations <- future_map_dfr(seq_len(num_iterations), function(i) {
+  
+  # Primary parameters
+  primary <- list(
+    mu_opt = ModelData$mu_opt[i],
+    Nmax   = ModelData$Nmax[i],
+    N0     = ModelData$N0[i],
+    Q0     = ModelData$Q0[i]
+  )
+  
+  # Secondary parameters
+  secondary <- list(
+    temperature = list(
+      model = "reducedRatkowsky",
+      xmin  = ModelData$Tmin[i],
+      b     = ModelData$b[i],
+      clade = ModelData$Clade[i]
+    )
+  )
+  
+  growth <- predict_dynamic_growth(
+    times = my_times,
+    env_conditions = tibble(
+      time = env_cond_time[i, ],
+      temperature = env_cond_temp[i, ]
+    ),
+    primary,
+    secondary
+  )
+  
   sim <- growth$simulation
-  all_simulations[[i]] <- sim
+  sim$isolate_id <- isolate_id
+  sim
+},
+.options = furrr_options(seed = TRUE)
+)
+return(all_simulations)
 }
 
-final_conc <- do.call(rbind, all_simulations)
-df <- final_conc
-
-PS00399_df_day14 = subset(df, time == "14")
-PS00399_df_day21 = subset(df, time == "21")
-PS00399_df_day35 = subset(df, time == "35")
-
-sum(PS00399_df_day35$logN>5)/10000
-sum(PS00399_df_day35$logN<3)/10000
-sum(PS00399_df_day35$logN>=3 & PS00399_df_day35$logN<=5)/10000
-
-PS00399_df_day35$color<-ifelse(test = PS00399_df_day35$logN>=5,yes = "Above 5 log",no = 
-                    ifelse(PS00399_df_day35$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
-
-PS00399_df_day35$isolate = "PS00399"
-cytotoxicus_df_day35 = rbind(PS00399_df_day35,PS00399_df_day35)
-
-cytotoxicus_df_day35$color <- factor(
-  cytotoxicus_df_day35$color,
-  levels = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
+results_list <- future_pmap(
+  cases,
+  function(id, final_file, ani_file) {
+    run_simulation(final_file = final_file, ani_file = ani_file,isolate_id = id)
+    },
+  .options = furrr_options(seed = TRUE)
 )
 
-breaks <- seq(0, 10, by = 0.5)
-finalhist <- ggplot(cytotoxicus_df_day35, aes(x = logN, fill = color)) +
-  geom_histogram(
-    breaks = breaks,
-    color = NA
-    ) +
-  facet_wrap(~ isolate, ncol = 3) +
-  scale_fill_manual(
-    name = expression(italic(B~cereus) ~ "count per ml"),
-    values = c(
-      "Below 3 log" = "springgreen3",
-      "Between 3 and 5 log" = "darkorange1",
-      "Above 5 log" = "red3"
-      ),
-    breaks = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
-    ) +
-  xlab("log CFU per ml") +
-  ylab("Number of Units (log scale)") +
-  ggtitle(expression(italic(cytotoxicus))) +
-  scale_y_log10(
-    breaks = scales::trans_breaks("log10", function(x) 10^x),
-    labels = scales::trans_format("log10", scales::math_format(10^.x))
-    ) +
-  theme_classic() +   # removes background grid lines
-  theme(
-    plot.title = element_text(size = 28, face = "bold"),
-    axis.title.x = element_text(size = 24),
-    axis.title.y = element_text(size = 24),
-    axis.text.x = element_text(size = 20),
-    axis.text.y = element_text(size = 20),
-    strip.text = element_text(size = 22, face = "bold"),
-    legend.text = element_text(size = 20),
-    legend.title = element_text(size = 22, face = "bold")
-    )
-cytotoxicus_d35_plot = finalhist
+final_results <- bind_rows(results_list)
 
-# Supplemental Figure 1
-library(gridExtra)
-grid.arrange(pseudomycoides_d21_plot,albus_d21_plot,mobilis_d21_plot)
-grid.arrange(tropicus_d21_plot,pacificus_d21_plot,cereus_d21_plot)
-grid.arrange(thuringiensis_d21_plot,toyonensis_d21_plot,cytotoxicus_d21_plot)
-
-grid.arrange(pseudomycoides_d35_plot,albus_d35_plot,mobilis_d35_plot)
-grid.arrange(tropicus_d35_plot,pacificus_d35_plot,cereus_d35_plot)
-grid.arrange(thuringiensis_d35_plot,toyonensis_d35_plot,cytotoxicus_d35_plot)
+final_results_day14 = subset(final_results, time == "14")
+final_results_day21 = subset(final_results, time == "21")
+final_results_day35 = subset(final_results, time == "35")
 
 # Figure 4
-dat = read.csv("Figure 4 input.csv")
-dat$Species <- factor(dat$Species, levels = unique(dat$Species))
+summary_df_14 <- final_results_day14  %>%
+  group_by(isolate_id) %>%
+  summarise(
+    n = n(),
+    pct_logN_gt_5 = mean(logN > 5) * 100,
+    pct_logN_lt_3 = mean(logN < 3) * 100,
+    pct_logN_3_5  = mean(logN >= 3 & logN <= 5) * 100
+  )
+summary_df_14 <- N0_df_sub %>%
+  select(Isolate, Closest.Type.Strain) %>%
+  left_join(summary_df_14, by = c("Isolate" = "isolate_id"))
+
+
+summary_df_21 <- final_results_day21  %>%
+  group_by(isolate_id) %>%
+  summarise(
+    n = n(),
+    pct_logN_gt_5 = mean(logN > 5) * 100,
+    pct_logN_lt_3 = mean(logN < 3) * 100,
+    pct_logN_3_5  = mean(logN >= 3 & logN <= 5) * 100
+  )
+summary_df_21 <- N0_df_sub %>%
+  select(Isolate, Closest.Type.Strain) %>%
+  left_join(summary_df_21, by = c("Isolate" = "isolate_id"))
+
+summary_df_35 <- final_results_day35  %>%
+  group_by(isolate_id) %>%
+  summarise(
+    n = n(),
+    pct_logN_gt_5 = mean(logN > 5) * 100,
+    pct_logN_lt_3 = mean(logN < 3) * 100,
+    pct_logN_3_5  = mean(logN >= 3 & logN <= 5) * 100
+  )
+summary_df_35 <- N0_df_sub %>%
+  select(Isolate, Closest.Type.Strain) %>%
+  left_join(summary_df_35, by = c("Isolate" = "isolate_id"))
+
+dat <- list(
+  "14" = summary_df_14,
+  "21" = summary_df_21,
+  "35" = summary_df_35
+) %>%
+  bind_rows(.id = "Day") %>%
+  mutate(
+    Day = as.numeric(Day)
+  ) %>%
+  select(Isolate, Closest.Type.Strain, pct_logN_gt_5, Day)
+
+colnames(dat) <- c("Isolate", "species", "log_5plus", "Day")
+
+dat <- dat %>%
+  group_by(Day) %>%
+  distinct(species, .keep_all = TRUE) %>%
+  ungroup()
+
+dat$species <- factor(dat$species, levels = unique(dat$species))
 dat$Day <- factor(dat$Day)
-p <- ggplot(dat, aes(x = Species, y = log_5plus, fill = Day)) +
+p <- ggplot(dat, aes(x = species, y = log_5plus, fill = Day)) +
   geom_col(position = position_dodge(width = 0.8), width = 0.7) +
   scale_y_continuous(limits = c(0, 5), expand = c(0, 0)) +
   labs(x = "Species",
@@ -245,5 +293,165 @@ p <- ggplot(dat, aes(x = Species, y = log_5plus, fill = Day)) +
     axis.text.x = element_text(angle = 45, hjust = 1),
     panel.grid = element_blank()
   )
-
 p
+
+# Supplemental Figure 1
+final_results_day14 <- N0_df_sub %>%
+  select(Isolate, Closest.Type.Strain) %>%
+  left_join(final_results_day14, by = c("Isolate" = "isolate_id"))
+
+final_results_day21 <- N0_df_sub %>%
+  select(Isolate, Closest.Type.Strain) %>%
+  left_join(final_results_day21, by = c("Isolate" = "isolate_id"))
+
+final_results_day35 <- N0_df_sub %>%
+  select(Isolate, Closest.Type.Strain) %>%
+  left_join(final_results_day35, by = c("Isolate" = "isolate_id"))
+
+final_results_day14$color<-ifelse(test = final_results_day14$logN>=5,yes = "Above 5 log",no = 
+                    ifelse(final_results_day14$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
+
+final_results_day21$color<-ifelse(test = final_results_day21$logN>=5,yes = "Above 5 log",no = 
+                                    ifelse(final_results_day21$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
+
+final_results_day35$color<-ifelse(test = final_results_day35$logN>=5,yes = "Above 5 log",no = 
+                                    ifelse(final_results_day35$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
+
+final_results_day14$color <- factor(
+  final_results_day14$color,
+  levels = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
+)
+breaks <- seq(0, 10, by = 0.5)
+plot_list_day_14 <- split(final_results_day14, final_results_day14$Closest.Type.Strain)
+plot_list_day_14 <- lapply(plot_list_day_14, function(data_subset) {
+  ggplot(data_subset, aes(x = logN, fill = color)) +
+    geom_histogram(
+      breaks = breaks,
+      color = NA
+    ) +
+    facet_wrap(~ Isolate, ncol = 3) +
+    scale_fill_manual(
+      name = expression(italic(italic(B~cereus) ~ "count per ml")),
+      values = c(
+        "Below 3 log" = "springgreen3",
+        "Between 3 and 5 log" = "darkorange1",
+        "Above 5 log" = "red3"
+      ),
+      breaks = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
+    ) +
+    xlab("log CFU per ml") +
+    ylab("Number of Units (log scale)") +
+    ggtitle(unique(data_subset$Closest.Type.Strain)) +
+    scale_y_log10(
+      breaks = scales::trans_breaks("log10", function(x) 10^x),
+      labels = scales::trans_format("log10", scales::math_format(10^.x))
+    ) +
+    theme_classic() +
+    theme(
+      plot.title = element_text(size = 28, face = "bold"),
+      axis.title.x = element_text(size = 24),
+      axis.title.y = element_text(size = 24),
+      axis.text.x = element_text(size = 20),
+      axis.text.y = element_text(size = 20),
+      legend.text = element_text(size = 20),
+      legend.title = element_text(size = 22, face = "bold")
+    )
+})
+
+final_results_day21$color <- factor(
+  final_results_day21$color,
+  levels = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
+)
+breaks <- seq(0, 10, by = 0.5)
+plot_list_day_21 <- split(final_results_day21, final_results_day21$Closest.Type.Strain)
+plot_list_day_21 <- lapply(plot_list_day_21, function(data_subset) {
+  ggplot(data_subset, aes(x = logN, fill = color)) +
+    geom_histogram(
+      breaks = breaks,
+      color = NA
+    ) +
+    facet_wrap(~ Isolate, ncol = 3) +
+    scale_fill_manual(
+      name = expression(italic(italic(B~cereus) ~ "count per ml")),
+      values = c(
+        "Below 3 log" = "springgreen3",
+        "Between 3 and 5 log" = "darkorange1",
+        "Above 5 log" = "red3"
+      ),
+      breaks = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
+    ) +
+    xlab("log CFU per ml") +
+    ylab("Number of Units (log scale)") +
+    ggtitle(unique(data_subset$Closest.Type.Strain)) +
+    scale_y_log10(
+      breaks = scales::trans_breaks("log10", function(x) 10^x),
+      labels = scales::trans_format("log10", scales::math_format(10^.x))
+    ) +
+    theme_classic() +
+    theme(
+      plot.title = element_text(size = 28, face = "bold"),
+      axis.title.x = element_text(size = 24),
+      axis.title.y = element_text(size = 24),
+      axis.text.x = element_text(size = 20),
+      axis.text.y = element_text(size = 20),
+      legend.text = element_text(size = 20),
+      legend.title = element_text(size = 22, face = "bold")
+    )
+})
+
+final_results_day35$color <- factor(
+  final_results_day35$color,
+  levels = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
+)
+breaks <- seq(0, 10, by = 0.5)
+plot_list_day_35 <- split(final_results_day35, final_results_day35$Closest.Type.Strain)
+plot_list_day_35 <- lapply(plot_list_day_35, function(data_subset) {
+  ggplot(data_subset, aes(x = logN, fill = color)) +
+    geom_histogram(
+      breaks = breaks,
+      color = NA
+    ) +
+    facet_wrap(~ Isolate, ncol = 3) +
+    scale_fill_manual(
+      name = expression(italic(italic(B~cereus) ~ "count per ml")),
+      values = c(
+        "Below 3 log" = "springgreen3",
+        "Between 3 and 5 log" = "darkorange1",
+        "Above 5 log" = "red3"
+      ),
+      breaks = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
+    ) +
+    xlab("log CFU per ml") +
+    ylab("Number of Units (log scale)") +
+    ggtitle(unique(data_subset$Closest.Type.Strain)) +
+    scale_y_log10(
+      breaks = scales::trans_breaks("log10", function(x) 10^x),
+      labels = scales::trans_format("log10", scales::math_format(10^.x))
+    ) +
+    theme_classic() +
+    theme(
+      plot.title = element_text(size = 28, face = "bold"),
+      axis.title.x = element_text(size = 24),
+      axis.title.y = element_text(size = 24),
+      axis.text.x = element_text(size = 20),
+      axis.text.y = element_text(size = 20),
+      legend.text = element_text(size = 20),
+      legend.title = element_text(size = 22, face = "bold")
+    )
+})
+
+
+# Supplemental Figure 1
+library(gridExtra)
+
+grid.arrange(plot_list_day_14$pseudomycoides,plot_list_day_14$albus, plot_list_day_14$mobilis)
+grid.arrange(plot_list_day_14$tropicus,plot_list_day_14$pacificus, plot_list_day_14$cereus)
+grid.arrange(plot_list_day_14$thuringiensis,plot_list_day_14$toyonensis, plot_list_day_14$cytotoxicus)
+
+grid.arrange(plot_list_day_21$pseudomycoides,plot_list_day_21$albus, plot_list_day_21$mobilis)
+grid.arrange(plot_list_day_21$tropicus,plot_list_day_21$pacificus, plot_list_day_21$cereus)
+grid.arrange(plot_list_day_21$thuringiensis,plot_list_day_21$toyonensis, plot_list_day_21$cytotoxicus)
+
+grid.arrange(plot_list_day_35$pseudomycoides,plot_list_day_35$albus, plot_list_day_35$mobilis)
+grid.arrange(plot_list_day_35$tropicus,plot_list_day_35$pacificus, plot_list_day_35$cereus)
+grid.arrange(plot_list_day_35$thuringiensis,plot_list_day_35$toyonensis, plot_list_day_35$cytotoxicus)

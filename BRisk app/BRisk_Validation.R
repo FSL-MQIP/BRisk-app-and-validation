@@ -17,8 +17,6 @@ plan(multisession)
 # Utility functions
 source("UtilityFunctions_dynamic_growth.R")
 
-set.seed(1)
-
 # Generate database 
 # BTyper data
 BTyper3_input <- read.csv("Btyper3_Results.csv")
@@ -223,6 +221,7 @@ results_list <- future_pmap(
 # Combine results
 final_results <- bind_rows(results_list)
 
+# Use first quartile 
 # Summary stats
 summary_stats <- final_results %>%
   group_by(isolate_id, t_H) %>%
@@ -247,4 +246,47 @@ df_merged <- summary_stats %>%
 names(df_merged) <- c("isolate_id", "consumer storage day", "pred_conc", "species", "obs_conc")
 df_merged$Diff = df_merged$pred_conc - df_merged$obs_conc
 df_filtered <- df_merged %>%
+  filter(abs(Diff) > 1)
+
+# Use weighted average 
+# isolate_weights 
+isolate_weights <- final_results %>%
+  group_by(isolate_id, t_H, isolate) %>%
+  summarise(
+    n = n(),
+    .groups = "drop"
+    ) %>%
+  group_by(isolate_id, t_H) %>%
+  mutate(
+    weight = n / sum(n)
+    ) %>%
+  ungroup()
+
+# unique_df
+unique_df <- final_results %>%
+  distinct(isolate, t_H, isolate_id, conc)
+
+joined_df <- unique_df %>%
+  left_join(isolate_weights,
+  by = c("isolate_id", "t_H", "isolate"))
+
+summary_stats_1 <- joined_df %>%
+  group_by(isolate_id, t_H) %>%
+  summarise(
+    c_weighted = sum(conc * weight, na.rm = TRUE),
+    .groups = "drop"
+  )
+
+df_merged_1 <- summary_stats_1 %>%
+  left_join(
+    N0_df,
+    by = c(
+      "isolate_id" = "Isolate",
+      "t_H" = "Consumer.storage.day"
+    )
+  )
+
+names(df_merged_1) <- c("isolate_id", "consumer storage day", "pred_conc", "species", "obs_conc")
+df_merged_1$Diff = df_merged_1$pred_conc - df_merged_1$obs_conc
+df_filtered_1 <- df_merged_1 %>%
   filter(abs(Diff) > 1)

@@ -90,6 +90,8 @@ run_simulation <- function(final_file, ani_file, isolate_id, N0_value, t_H) {
   # Assigning ANI weight
   matching_species_df$ANI_wght <- matching_species_df$ANI_new / sum(matching_species_df$ANI_new)
   
+  set.seed(1)
+  
   # Simulation setup
   n_sim <- 10000
   matching_species_df$n_units <- round(n_sim * matching_species_df$ANI_wght)

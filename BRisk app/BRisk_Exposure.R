@@ -13,7 +13,7 @@ library(ggplot2)
 # Parallel setup
 library(furrr)
 library(future)
-plan(multisession)
+plan(multisession, workers = 2)
 
 # Load utility functions
 source("UtilityFunctions_dynamic_growth.R")
@@ -23,7 +23,7 @@ source("UtilityFunctions_dynamic_growth.R")
 BTyper3_input = read.csv("Btyper3_Results.csv")
 colnames(BTyper3_input)[1] <- "Isolate.Name"
 gp_input = read.csv("simulation_input.csv")
-database = cbind(BTyper3_input,gp_input[,3:7])
+database = cbind(BTyper3_input,gp_input[,3:10])
 database <- database %>% 
   separate(Closest_Type_Strain.ANI., into = c("species","ANI"), sep = "\\(") %>%
   mutate(ANI = gsub("\\)", "", ANI))
@@ -126,6 +126,21 @@ temps[i] <- number
 }
 ModelData$T_H <- temps
 
+# Sensitivity analysis to assess uncertainty of temperature 
+# + 1.5C
+# ModelData$T_F = ModelData$T_F + 1.5
+# ModelData$T_T = ModelData$T_T + 1.5
+# ModelData$T_S = ModelData$T_S + 1.5
+# ModelData$T_T2 = ModelData$T_T2 + 1.5
+# ModelData$T_H = ModelData$T_H + 1.5 
+
+# - 1.5C
+# ModelData$T_F = ModelData$T_F - 1.5
+# ModelData$T_T = ModelData$T_T - 1.5
+# ModelData$T_S = ModelData$T_S - 1.5
+# ModelData$T_T2 = ModelData$T_T2 - 1.5
+# ModelData$T_H = ModelData$T_H - 1.5 
+
 ## (b) Define t_H as 35 days for all units
 ModelData$t_H <- rep(35, each = n_sim)
 
@@ -154,16 +169,27 @@ env_cond_temp <- matrix(c(ModelData$T_F,
 
 ## Assign growth parameters to 10,000 units of HTST milk 
 ModelData$index = match(ModelData$isolate, matching_species_df$Isolate.Name)
-ModelData$Q0 = matching_species_df$Q0[ModelData$index]
-ModelData$Nmax = matching_species_df$Nmax[ModelData$index]
+ModelData$mean_LOG10Q0 = matching_species_df$mean_LOG10Q0[ModelData$index]
+ModelData$sd_LOG10Q0 = matching_species_df$sd_LOG10Q0[ModelData$index]
+ModelData <- ModelData %>%
+  mutate(LOGQ0 = rnorm(n(),mean = mean_LOG10Q0,sd = sd_LOG10Q0))
+ModelData$Q0 = 10^ModelData$LOGQ0
+ModelData$mean_Nmax = matching_species_df$mean_Nmax[ModelData$index]
+ModelData$sd_Nmax = matching_species_df$sd_Nmax[ModelData$index]
+ModelData <- ModelData %>%
+  mutate(LOGNmax = rnorm(n(),mean = mean_Nmax,sd = sd_Nmax))
+ModelData$Nmax = 10^(ModelData$LOGNmax)
 ModelData$b = matching_species_df$b[ModelData$index]
 ModelData$Tmin = matching_species_df$Tmin[ModelData$index]
 ModelData$Clade = matching_species_df$Clade[ModelData$index]
 
 ## Generate N0 from a Poisson distribution 
 set.seed(42)
-N0 = rpois(n = n_sim, lambda = 100)
-ModelData$N0 = N0 
+N0 = rpois(n = n_sim, lambda = 1*1900)
+# Sensitivity analysis to assess uncertainty of lambda 
+# N0 = rpois(n = n_sim, lambda = 0.5*1900) # lower level
+# N0 = rpois(n = n_sim, lambda = 10*1900) # higher level
+ModelData$N0 = N0/1900
 
 ModelData$Topt = sapply(ModelData$Clade, xopt_func)
 ModelData$mu_opt = (ModelData$b*(ModelData$Topt-ModelData$Tmin))^2
@@ -218,45 +244,54 @@ results_list <- future_pmap(
   .options = furrr_options(seed = TRUE)
 )
 
-final_results <- bind_rows(results_list)
+final_results <- bind_rows(results_list) 
 
 final_results_day14 = subset(final_results, time == "14")
 final_results_day21 = subset(final_results, time == "21")
 final_results_day35 = subset(final_results, time == "35")
 
-# Figure 4
-summary_df_14 <- final_results_day14  %>%
+# Figure 6
+summary_df_14 <- final_results_day14 %>%
   group_by(isolate_id) %>%
   summarise(
-    n = n(),
-    pct_logN_gt_5 = mean(logN > 5) * 100,
-    pct_logN_lt_3 = mean(logN < 3) * 100,
-    pct_logN_3_5  = mean(logN >= 3 & logN <= 5) * 100
+    n_total = n(),
+    n_gt_5 = sum(logN > 5),
+    n_lt_3 = sum(logN < 3),
+    n_3_5  = sum(logN >= 3 & logN <= 5),
+    pct_gt_5 = n_gt_5 / n_total * 100,
+    pct_lt_3 = n_lt_3 / n_total * 100,
+    pct_3_5  = n_3_5  / n_total * 100
   )
 summary_df_14 <- N0_df_sub %>%
   select(Isolate, Closest.Type.Strain) %>%
   left_join(summary_df_14, by = c("Isolate" = "isolate_id"))
 
-
-summary_df_21 <- final_results_day21  %>%
+summary_df_21 <- final_results_day21 %>%
   group_by(isolate_id) %>%
   summarise(
-    n = n(),
-    pct_logN_gt_5 = mean(logN > 5) * 100,
-    pct_logN_lt_3 = mean(logN < 3) * 100,
-    pct_logN_3_5  = mean(logN >= 3 & logN <= 5) * 100
+    n_total = n(),
+    n_gt_5 = sum(logN > 5),
+    n_lt_3 = sum(logN < 3),
+    n_3_5  = sum(logN >= 3 & logN <= 5),
+    pct_gt_5 = n_gt_5 / n_total * 100,
+    pct_lt_3 = n_lt_3 / n_total * 100,
+    pct_3_5  = n_3_5  / n_total * 100
   )
 summary_df_21 <- N0_df_sub %>%
   select(Isolate, Closest.Type.Strain) %>%
   left_join(summary_df_21, by = c("Isolate" = "isolate_id"))
 
-summary_df_35 <- final_results_day35  %>%
+final_results_day35 <- final_results_day35[!is.na(final_results_day35$logN), ]
+summary_df_35 <- final_results_day35 %>%
   group_by(isolate_id) %>%
   summarise(
-    n = n(),
-    pct_logN_gt_5 = mean(logN > 5) * 100,
-    pct_logN_lt_3 = mean(logN < 3) * 100,
-    pct_logN_3_5  = mean(logN >= 3 & logN <= 5) * 100
+    n_total = n(),
+    n_gt_5 = sum(logN > 5),
+    n_lt_3 = sum(logN < 3),
+    n_3_5  = sum(logN >= 3 & logN <= 5),
+    pct_gt_5 = n_gt_5 / n_total * 100,
+    pct_lt_3 = n_lt_3 / n_total * 100,
+    pct_3_5  = n_3_5  / n_total * 100
   )
 summary_df_35 <- N0_df_sub %>%
   select(Isolate, Closest.Type.Strain) %>%
@@ -271,7 +306,7 @@ dat <- list(
   mutate(
     Day = as.numeric(Day)
   ) %>%
-  select(Isolate, Closest.Type.Strain, pct_logN_gt_5, Day)
+  select(Isolate, Closest.Type.Strain, pct_gt_5, Day)
 
 colnames(dat) <- c("Isolate", "species", "log_5plus", "Day")
 
@@ -284,7 +319,7 @@ dat$species <- factor(dat$species, levels = unique(dat$species))
 dat$Day <- factor(dat$Day)
 p <- ggplot(dat, aes(x = species, y = log_5plus, fill = Day)) +
   geom_col(position = position_dodge(width = 0.8), width = 0.7) +
-  scale_y_continuous(limits = c(0, 5), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0, 2.5), expand = c(0, 0)) +
   labs(x = "Species",
        y = "Percent milk containers over 5 logs",
        fill = "Shelf-life day") +
@@ -295,7 +330,7 @@ p <- ggplot(dat, aes(x = species, y = log_5plus, fill = Day)) +
   )
 p
 
-# Supplemental Figure 1
+# Supplemental Figure 3
 final_results_day14 <- N0_df_sub %>%
   select(Isolate, Closest.Type.Strain) %>%
   left_join(final_results_day14, by = c("Isolate" = "isolate_id"))
@@ -308,20 +343,23 @@ final_results_day35 <- N0_df_sub %>%
   select(Isolate, Closest.Type.Strain) %>%
   left_join(final_results_day35, by = c("Isolate" = "isolate_id"))
 
+final_results_day14<- final_results_day14[final_results_day14$logN != -Inf, ]
 final_results_day14$color<-ifelse(test = final_results_day14$logN>=5,yes = "Above 5 log",no = 
                     ifelse(final_results_day14$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
 
+final_results_day21<- final_results_day21[final_results_day21$logN != -Inf, ]
 final_results_day21$color<-ifelse(test = final_results_day21$logN>=5,yes = "Above 5 log",no = 
-                                    ifelse(final_results_day21$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
+                    ifelse(final_results_day21$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
 
+final_results_day35<- final_results_day35[final_results_day35$logN != -Inf, ]
 final_results_day35$color<-ifelse(test = final_results_day35$logN>=5,yes = "Above 5 log",no = 
-                                    ifelse(final_results_day35$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
+                    ifelse(final_results_day35$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
 
 final_results_day14$color <- factor(
   final_results_day14$color,
   levels = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
 )
-breaks <- seq(0, 10, by = 0.5)
+breaks <- seq(0, 10, by = 1)
 plot_list_day_14 <- split(final_results_day14, final_results_day14$Closest.Type.Strain)
 plot_list_day_14 <- lapply(plot_list_day_14, function(data_subset) {
   ggplot(data_subset, aes(x = logN, fill = color)) +
@@ -362,7 +400,7 @@ final_results_day21$color <- factor(
   final_results_day21$color,
   levels = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
 )
-breaks <- seq(0, 10, by = 0.5)
+breaks <- seq(0, 10, by = 1)
 plot_list_day_21 <- split(final_results_day21, final_results_day21$Closest.Type.Strain)
 plot_list_day_21 <- lapply(plot_list_day_21, function(data_subset) {
   ggplot(data_subset, aes(x = logN, fill = color)) +
@@ -403,7 +441,7 @@ final_results_day35$color <- factor(
   final_results_day35$color,
   levels = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
 )
-breaks <- seq(0, 10, by = 0.5)
+breaks <- seq(0, 10, by = 1)
 plot_list_day_35 <- split(final_results_day35, final_results_day35$Closest.Type.Strain)
 plot_list_day_35 <- lapply(plot_list_day_35, function(data_subset) {
   ggplot(data_subset, aes(x = logN, fill = color)) +
@@ -441,7 +479,7 @@ plot_list_day_35 <- lapply(plot_list_day_35, function(data_subset) {
 })
 
 
-# Supplemental Figure 1
+# Supplemental Figure 3
 library(gridExtra)
 
 grid.arrange(plot_list_day_14$pseudomycoides,plot_list_day_14$albus, plot_list_day_14$mobilis)
@@ -455,3 +493,152 @@ grid.arrange(plot_list_day_21$thuringiensis,plot_list_day_21$toyonensis, plot_li
 grid.arrange(plot_list_day_35$pseudomycoides,plot_list_day_35$albus, plot_list_day_35$mobilis)
 grid.arrange(plot_list_day_35$tropicus,plot_list_day_35$pacificus, plot_list_day_35$cereus)
 grid.arrange(plot_list_day_35$thuringiensis,plot_list_day_35$toyonensis, plot_list_day_35$cytotoxicus)
+
+# Figure 7
+# Uncertainty of N0
+result_df_N0 <- summary_df_35_1900 %>%
+  select(Isolate, Closest.Type.Strain, pct_gt_5) %>%
+  rename(pct_gt_5_1900 = pct_gt_5) %>%
+  left_join(
+    summary_df_35_950 %>%
+      select(Isolate, Closest.Type.Strain, pct_gt_5) %>%
+      rename(pct_gt_5_950 = pct_gt_5),
+    by = c("Isolate", "Closest.Type.Strain")
+  ) %>%
+  left_join(
+    summary_df_35_19000 %>%
+      select(Isolate, Closest.Type.Strain, pct_gt_5) %>%
+      rename(pct_gt_5_19000 = pct_gt_5),
+    by = c("Isolate", "Closest.Type.Strain")
+  )
+
+tornado_dfN0 <- result_df_N0 %>%
+  group_by(Closest.Type.Strain) %>%
+  summarise(
+    pct_gt_5_950   = mean(pct_gt_5_950, na.rm = TRUE),
+    pct_gt_5_1900  = mean(pct_gt_5_1900, na.rm = TRUE),
+    pct_gt_5_19000 = mean(pct_gt_5_19000, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    decrease_950   = pct_gt_5_950 - pct_gt_5_1900,
+    increase_19000 = pct_gt_5_19000 - pct_gt_5_1900
+  )
+
+order_levels <- tornado_dfN0 %>%
+  arrange(increase_19000) %>%
+  pull(Closest.Type.Strain) %>%
+  unique()
+
+tornado_dfN0 <- tornado_dfN0 %>%
+  mutate(Closest.Type.Strain = factor(Closest.Type.Strain, levels = order_levels))
+
+plot_dfN0 <- tornado_dfN0 %>%
+  select(Closest.Type.Strain, decrease_950, increase_19000) %>%
+  pivot_longer(
+    cols = c(decrease_950, increase_19000),
+    names_to = "scenario",
+    values_to = "change"
+  ) %>%
+  mutate(
+    scenario = recode(
+      scenario,
+      decrease_950 = "lambda = 950 CFU/container",
+      increase_19000 = "lambda = 19000 CFU/container"
+    )
+  )
+
+ggplot(plot_dfN0,
+       aes(
+         y = Closest.Type.Strain,
+         x = change,
+         fill = scenario
+       )) +
+  geom_col(position = "identity") +
+  scale_fill_manual(
+    values = c(
+      "lambda = 950 CFU/container" = "blue",
+      "lambda = 19000 CFU/container" = "red"
+    )
+  ) +
+  labs(
+    x = "Percentage point increases and decreases from the baseline",
+    y = "Species",
+    fill = NULL
+  ) +
+  theme_bw() +
+  coord_cartesian(xlim = c(-1.5, 4))
+
+# Uncertainty of temperature profile
+result_df_temp <- summary_df_35_1900 %>%
+  select(Isolate, Closest.Type.Strain, pct_gt_5) %>%
+  rename(pct_gt_5_base = pct_gt_5) %>%
+  left_join(
+    summary_df_35_minus1.5C %>%
+      select(Isolate, Closest.Type.Strain, pct_gt_5) %>%
+      rename(pct_gt_5_minus1.5C = pct_gt_5),
+    by = c("Isolate", "Closest.Type.Strain")
+  ) %>%
+  left_join(
+    summary_df_35_1.5C %>%
+      select(Isolate, Closest.Type.Strain, pct_gt_5) %>%
+      rename(pct_gt_5_1.5C = pct_gt_5),
+    by = c("Isolate", "Closest.Type.Strain")
+  )
+
+tornado_dfTemp <- result_df_temp %>%
+  group_by(Closest.Type.Strain) %>%
+  summarise(
+    pct_gt_5_base        = mean(pct_gt_5_base, na.rm = TRUE),
+    pct_gt_5_minus1.5C   = mean(pct_gt_5_minus1.5C, na.rm = TRUE),
+    pct_gt_5_1.5C        = mean(pct_gt_5_1.5C, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    decrease_minus1.5C = pct_gt_5_minus1.5C - pct_gt_5_base,
+    increase_1.5C      = pct_gt_5_1.5C - pct_gt_5_base
+  )
+
+order_levels <- tornado_dfTemp %>%
+  arrange(increase_1.5C) %>%
+  pull(Closest.Type.Strain) %>%
+  unique()
+
+tornado_dfTemp <- tornado_dfTemp %>%
+  mutate(Closest.Type.Strain = factor(Closest.Type.Strain, levels = order_levels))
+
+plot_dfTemp <- tornado_dfTemp %>%
+  select(Closest.Type.Strain, decrease_minus1.5C, increase_1.5C) %>%
+  pivot_longer(
+    cols = c(decrease_minus1.5C, increase_1.5C),
+    names_to = "scenario",
+    values_to = "change"
+  ) %>%
+  mutate(
+    scenario = recode(
+      scenario,
+      decrease_minus1.5C = "-1.5C",
+      increase_1.5C = "+1.5C"
+    )
+  )
+
+ggplot(plot_dfTemp,
+       aes(
+         y = Closest.Type.Strain,
+         x = change,
+         fill = scenario
+       )) +
+  geom_col(position = "identity") +
+  scale_fill_manual(
+    values = c(
+      "-1.5C" = "blue",
+      "+1.5C" = "red"
+    )
+  ) +
+  labs(
+    x = "Percentage point change from baseline",
+    y = "Species",
+    fill = NULL
+  ) +
+  theme_bw() +
+  coord_cartesian(xlim = c(-1.5, 4))

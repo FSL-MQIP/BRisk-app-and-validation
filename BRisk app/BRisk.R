@@ -38,7 +38,7 @@ screen_risks <- function(emetic_genes) {
 BTyper3_input = read.csv("Btyper3_Results.csv")
 colnames(BTyper3_input)[1] <- "Isolate.Name"
 gp_input = read.csv("simulation_input.csv")
-database = cbind(BTyper3_input,gp_input[,3:7])
+database = cbind(BTyper3_input,gp_input[,3:10])
 database <- database %>% 
   separate(Closest_Type_Strain.ANI., into = c("species","ANI"), sep = "\\(") %>%
   mutate(ANI = gsub("\\)", "", ANI))
@@ -89,8 +89,12 @@ ui <- fluidPage(
   sidebarLayout(
     sidebarPanel(
       div(class = "form-group",
-      numericInput("n0", "Average initial count (mean) in CFU/mL:", value = 100), 
-      ), # Numeric input for "initial count"
+      numericInput("n0", "Initial contamination concentration (CFU/mL):", value = 1), 
+      ), # Numeric input for "initial contamination concentration"
+      
+      div(class = "form-group",
+          numericInput("volume", "Container size (mL):", value = 1900), 
+      ), # Numeric input for "container size"
       
       div(class = "form-group",
       numericInput("d", "Shelf-life day:", value = 21),
@@ -249,16 +253,26 @@ server <- function(input, output) {
     ## Generate simulation input 
     ## Assign growth parameters to 10000 units of HTST milk 
     ModelData$index = match(ModelData$isolate, matching_species_df$Isolate.Name)
-    ModelData$Q0 = matching_species_df$Q0[ModelData$index]
-    ModelData$Nmax = matching_species_df$Nmax[ModelData$index]
+    ModelData$mean_LOG10Q0 = matching_species_df$mean_LOG10Q0[ModelData$index]
+    ModelData$sd_LOG10Q0 = matching_species_df$sd_LOG10Q0[ModelData$index]
+    ModelData <- ModelData %>%
+      mutate(LOGQ0 = rnorm(n(),mean = mean_LOG10Q0,sd = sd_LOG10Q0))
+    ModelData$Q0 = 10^ModelData$LOGQ0
+    ModelData$mean_Nmax = matching_species_df$mean_Nmax[ModelData$index]
+    ModelData$sd_Nmax = matching_species_df$sd_Nmax[ModelData$index]
+    ModelData <- ModelData %>%
+      mutate(LOGNmax = rnorm(n(),
+                             mean = mean_Nmax,
+                             sd = sd_Nmax))
+    ModelData$Nmax = 10^(ModelData$LOGNmax)
     ModelData$b = matching_species_df$b[ModelData$index]
     ModelData$Tmin = matching_species_df$Tmin[ModelData$index]
     ModelData$Clade = matching_species_df$Clade[ModelData$index]
     
     ## Generate N0 from a Poisson distribution 
     set.seed(42)
-    N0 = rpois(n = n_sim, lambda = input$n0)
-    ModelData$N0 = N0 
+    N0 = rpois(n = n_sim, lambda = input$n0*input$volume)
+    ModelData$N0 = N0/1900 
     
     ModelData$Topt = sapply(ModelData$Clade, xopt_func)
     ModelData$mu_opt = (ModelData$b*(ModelData$Topt-ModelData$Tmin))^2
@@ -294,13 +308,14 @@ server <- function(input, output) {
   output$hist1 <- renderPlot({
     req(data())
     df1 <- data()$df1
+    df1<- df1[df1$logN != -Inf, ]
     df1$color<-ifelse(test = df1$logN>=5,yes = "Above 5 log",no = 
     ifelse(df1$logN>=3,yes = "Between 3 and 5 log",no = "Below 3 log"))
     df1$color <- factor(
       df1$color,
       levels = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
     )
-    breaks <- seq(0, 10, by = 0.5)
+    breaks <- seq(0, 10, by = 1)
     finalhist<-ggplot(data = df1,aes(x = logN))
     finalhist<-finalhist+
       geom_histogram(data = df1,aes(fill=color),binwidth = 0.1, breaks = breaks)+

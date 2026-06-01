@@ -320,6 +320,9 @@ dat$Day <- factor(dat$Day)
 p <- ggplot(dat, aes(x = species, y = log_5plus, fill = Day)) +
   geom_col(position = position_dodge(width = 0.8), width = 0.7) +
   scale_y_continuous(limits = c(0, 2.5), expand = c(0, 0)) +
+  scale_x_discrete(
+    labels = function(x) parse(text = paste0("italic('B.')~italic('", x, "')"))
+  ) +
   labs(x = "Species",
        y = "Percent milk containers over 5 logs",
        fill = "Shelf-life day") +
@@ -329,6 +332,7 @@ p <- ggplot(dat, aes(x = species, y = log_5plus, fill = Day)) +
     panel.grid = element_blank()
   )
 p
+ggsave("Figure 6.png", p, width = 12, height = 6, dpi = 600)
 
 # Supplemental Figure 3
 final_results_day14 <- N0_df_sub %>%
@@ -371,15 +375,15 @@ plot_list_day_14 <- lapply(plot_list_day_14, function(data_subset) {
     scale_fill_manual(
       name = expression(italic(italic(B~cereus) ~ "count per ml")),
       values = c(
-        "Below 3 log" = "springgreen3",
-        "Between 3 and 5 log" = "darkorange1",
-        "Above 5 log" = "red3"
+        "Below 3 log" = "#779ECC",
+        "Between 3 and 5 log" = "#F2C894",
+        "Above 5 log" = "#FF985A"
       ),
       breaks = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
     ) +
     xlab("log CFU per ml") +
     ylab("Number of Units (log scale)") +
-    ggtitle(unique(data_subset$Closest.Type.Strain)) +
+    ggtitle(bquote(italic("B.") ~ italic(.(unique(data_subset$Closest.Type.Strain)))))+
     scale_y_log10(
       breaks = scales::trans_breaks("log10", function(x) 10^x),
       labels = scales::trans_format("log10", scales::math_format(10^.x))
@@ -412,15 +416,15 @@ plot_list_day_21 <- lapply(plot_list_day_21, function(data_subset) {
     scale_fill_manual(
       name = expression(italic(italic(B~cereus) ~ "count per ml")),
       values = c(
-        "Below 3 log" = "springgreen3",
-        "Between 3 and 5 log" = "darkorange1",
-        "Above 5 log" = "red3"
+        "Below 3 log" = "#779ECC",
+        "Between 3 and 5 log" = "#F2C894",
+        "Above 5 log" = "#FF985A"
       ),
       breaks = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
     ) +
     xlab("log CFU per ml") +
     ylab("Number of Units (log scale)") +
-    ggtitle(unique(data_subset$Closest.Type.Strain)) +
+    ggtitle(bquote(italic("B.") ~ italic(.(unique(data_subset$Closest.Type.Strain)))))+
     scale_y_log10(
       breaks = scales::trans_breaks("log10", function(x) 10^x),
       labels = scales::trans_format("log10", scales::math_format(10^.x))
@@ -453,15 +457,15 @@ plot_list_day_35 <- lapply(plot_list_day_35, function(data_subset) {
     scale_fill_manual(
       name = expression(italic(italic(B~cereus) ~ "count per ml")),
       values = c(
-        "Below 3 log" = "springgreen3",
-        "Between 3 and 5 log" = "darkorange1",
-        "Above 5 log" = "red3"
+        "Below 3 log" = "#779ECC",
+        "Between 3 and 5 log" = "#F2C894",
+        "Above 5 log" = "#FF985A"
       ),
       breaks = c("Below 3 log", "Between 3 and 5 log", "Above 5 log")
     ) +
     xlab("log CFU per ml") +
     ylab("Number of Units (log scale)") +
-    ggtitle(unique(data_subset$Closest.Type.Strain)) +
+    ggtitle(bquote(italic("B.") ~ italic(.(unique(data_subset$Closest.Type.Strain))))) +
     scale_y_log10(
       breaks = scales::trans_breaks("log10", function(x) 10^x),
       labels = scales::trans_format("log10", scales::math_format(10^.x))
@@ -482,17 +486,32 @@ plot_list_day_35 <- lapply(plot_list_day_35, function(data_subset) {
 # Supplemental Figure 3
 library(gridExtra)
 
-grid.arrange(plot_list_day_14$pseudomycoides,plot_list_day_14$albus, plot_list_day_14$mobilis)
-grid.arrange(plot_list_day_14$tropicus,plot_list_day_14$pacificus, plot_list_day_14$cereus)
-grid.arrange(plot_list_day_14$thuringiensis,plot_list_day_14$toyonensis, plot_list_day_14$cytotoxicus)
+S3A1 = grid.arrange(plot_list_day_14$pseudomycoides,plot_list_day_14$albus, plot_list_day_14$mobilis)
+ggsave("Supplemental 3A1.png", S3A1, width = 12, height = 14, dpi = 600)
 
-grid.arrange(plot_list_day_21$pseudomycoides,plot_list_day_21$albus, plot_list_day_21$mobilis)
-grid.arrange(plot_list_day_21$tropicus,plot_list_day_21$pacificus, plot_list_day_21$cereus)
-grid.arrange(plot_list_day_21$thuringiensis,plot_list_day_21$toyonensis, plot_list_day_21$cytotoxicus)
+S3A2 = grid.arrange(plot_list_day_14$tropicus,plot_list_day_14$pacificus, plot_list_day_14$cereus)
+ggsave("Supplemental 3A2.png", S3A2, width = 12, height = 14, dpi = 600)
 
-grid.arrange(plot_list_day_35$pseudomycoides,plot_list_day_35$albus, plot_list_day_35$mobilis)
-grid.arrange(plot_list_day_35$tropicus,plot_list_day_35$pacificus, plot_list_day_35$cereus)
-grid.arrange(plot_list_day_35$thuringiensis,plot_list_day_35$toyonensis, plot_list_day_35$cytotoxicus)
+S3A3 = grid.arrange(plot_list_day_14$thuringiensis,plot_list_day_14$toyonensis, plot_list_day_14$cytotoxicus)
+ggsave("Supplemental 3A3.png", S3A3, width = 12, height = 14, dpi = 600)
+
+S3B1 = grid.arrange(plot_list_day_21$pseudomycoides,plot_list_day_21$albus, plot_list_day_21$mobilis)
+ggsave("Supplemental 3B1.png", S3B1, width = 12, height = 14, dpi = 600)
+
+S3B2 = grid.arrange(plot_list_day_21$tropicus,plot_list_day_21$pacificus, plot_list_day_21$cereus)
+ggsave("Supplemental 3B2.png", S3B2, width = 12, height = 14, dpi = 600)
+
+S3B3 = grid.arrange(plot_list_day_21$thuringiensis,plot_list_day_21$toyonensis, plot_list_day_21$cytotoxicus)
+ggsave("Supplemental 3B3.png", S3B3, width = 12, height = 14, dpi = 600)
+
+S3C1 = grid.arrange(plot_list_day_35$pseudomycoides,plot_list_day_35$albus, plot_list_day_35$mobilis)
+ggsave("Supplemental 3C1.png", S3C1, width = 12, height = 14, dpi = 600)
+
+S3C2 = grid.arrange(plot_list_day_35$tropicus,plot_list_day_35$pacificus, plot_list_day_35$cereus)
+ggsave("Supplemental 3C2.png", S3C2, width = 12, height = 14, dpi = 600)
+
+S3C3 = grid.arrange(plot_list_day_35$thuringiensis,plot_list_day_35$toyonensis, plot_list_day_35$cytotoxicus)
+ggsave("Supplemental 3C3.png", S3C3, width = 12, height = 14, dpi = 600)
 
 # Figure 7
 # Uncertainty of N0
@@ -548,7 +567,7 @@ plot_dfN0 <- tornado_dfN0 %>%
     )
   )
 
-ggplot(plot_dfN0,
+Figure_7A = ggplot(plot_dfN0,
        aes(
          y = Closest.Type.Strain,
          x = change,
@@ -557,9 +576,12 @@ ggplot(plot_dfN0,
   geom_col(position = "identity") +
   scale_fill_manual(
     values = c(
-      "lambda = 950 CFU/container" = "blue",
-      "lambda = 19000 CFU/container" = "red"
+      "lambda = 950 CFU/container" = "skyblue",
+      "lambda = 19000 CFU/container" = "#C2185B"
     )
+  ) +
+  scale_y_discrete(
+    labels = function(x) parse(text = paste0("italic('B.')~italic('", x, "')"))
   ) +
   labs(
     x = "Percentage point increases and decreases from the baseline",
@@ -568,6 +590,7 @@ ggplot(plot_dfN0,
   ) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.5, 4))
+ggsave("Figure 7A.png", Figure_7A, width = 12, height = 8, dpi = 600)
 
 # Uncertainty of temperature profile
 result_df_temp <- summary_df_35_1900 %>%
@@ -622,7 +645,7 @@ plot_dfTemp <- tornado_dfTemp %>%
     )
   )
 
-ggplot(plot_dfTemp,
+Figure_7B = ggplot(plot_dfTemp,
        aes(
          y = Closest.Type.Strain,
          x = change,
@@ -631,9 +654,12 @@ ggplot(plot_dfTemp,
   geom_col(position = "identity") +
   scale_fill_manual(
     values = c(
-      "-1.5C" = "blue",
-      "+1.5C" = "red"
+      "-1.5C" = "skyblue",
+      "+1.5C" = "#C2185B"
     )
+  ) +
+  scale_y_discrete(
+    labels = function(x) parse(text = paste0("italic('B.')~italic('", x, "')"))
   ) +
   labs(
     x = "Percentage point change from baseline",
@@ -642,3 +668,128 @@ ggplot(plot_dfTemp,
   ) +
   theme_bw() +
   coord_cartesian(xlim = c(-1.5, 4))
+ggsave("Figure 7B.png", Figure_7B, width = 12, height = 8, dpi = 600)
+
+# Figure 3
+library(flextable)
+tbl_core <- as.data.frame(
+  matrix(
+    c(
+      "Negligible", "High", "High", "Very high", "Very high",
+      "Negligible", "Medium", "High", "High", "Very high",
+      "Negligible", "Medium", "Medium", "High", "Very high",
+      "Negligible", "Low", "Medium", "Medium", "High",
+      "Negligible", "Negligible", "Negligible", "Negligible", "Negligible"
+    ),
+    nrow = 5,
+    byrow = TRUE
+  )
+)
+
+col_headers <- c("", "Negligible", "Low", "Medium", "High", "Very high")
+
+tbl_with_header <- rbind(
+  col_headers,
+  cbind(
+    Severity = c("Very high", "High", "Medium", "Low", "Negligible"),
+    tbl_core
+  )
+)
+
+tbl_with_header <- as.data.frame(tbl_with_header, stringsAsFactors = FALSE)
+
+colors <- c(
+  "Very high"  = "#FF985A",
+  "High"       = "#FFB347",
+  "Medium"     = "#F2C894",
+  "Low"        = "#9FC0CE",
+  "Negligible" = "#779ECC"
+)
+
+ft <- flextable(tbl_with_header)
+
+ft <- bg(ft, i = 1, bg = "white")   # top row
+ft <- bg(ft, j = 1, bg = "white")   # left column
+
+for (i in 2:nrow(tbl_with_header)) {
+  for (j in 2:ncol(tbl_with_header)) {
+    
+    val <- tbl_with_header[i, j]
+    
+    ft <- bg(
+      ft,
+      i = i,
+      j = j,
+      bg = colors[val]
+    )
+  }
+}
+
+ft <- align(ft, align = "center", part = "all")
+ft
+save_as_image(
+  ft,
+  path = "Figure_3A.png",
+  expand = 10
+)
+
+tbl_core <- as.data.frame(
+  matrix(
+    c(
+      "Medium", "High", "High", "Very high", "Very high",
+      "Medium", "Medium", "High", "High", "Very high",
+      "Low", "Medium", "Medium", "High", "Very high",
+      "Low", "Low", "Medium", "Medium", "High",
+      "Negligible", "Negligible", "Negligible", "Negligible", "Negligible"
+    ),
+    nrow = 5,
+    byrow = TRUE
+  )
+)
+
+col_headers <- c("", "Very low", "Low", "Medium", "High", "Very high")
+
+tbl_with_header <- rbind(
+  col_headers,
+  cbind(
+    Severity = c("Very high", "High", "Medium", "Low", "Negligible"),
+    tbl_core
+  )
+)
+
+tbl_with_header <- as.data.frame(tbl_with_header, stringsAsFactors = FALSE)
+
+colors <- c(
+  "Very high"  = "#FF985A",
+  "High"       = "#FFB347",
+  "Medium"     = "#F2C894",
+  "Low"        = "#9FC0CE",
+  "Negligible" = "#779ECC"
+)
+
+ft1 <- flextable(tbl_with_header)
+
+ft1 <- bg(ft1, i = 1, bg = "white")  # top row
+ft1 <- bg(ft1, j = 1, bg = "white")  # left column
+
+for (i in 2:nrow(tbl_with_header)) {
+  for (j in 2:ncol(tbl_with_header)) {
+    
+    val <- tbl_with_header[i, j]
+    
+    ft1 <- bg(
+      ft1,
+      i = i,
+      j = j,
+      bg = colors[val]
+    )
+  }
+}
+
+ft1 <- align(ft1, align = "center", part = "all")
+ft1
+save_as_image(
+  ft1,
+  path = "Figure_3B.png",
+  expand = 10
+)

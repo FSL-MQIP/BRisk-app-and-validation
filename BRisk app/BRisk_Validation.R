@@ -368,6 +368,7 @@ heat_map <- ggplot(prcc_results,
     panel.grid = element_blank(),
     panel.spacing = unit(1, "lines")
   )
+ggsave("Supplemental Figure 2.png", heat_map, width = 12, height = 8, dpi = 600)
 
 # Figure 4 
 library(patchwork)
@@ -395,11 +396,16 @@ make_group_plot <- function(df, group_name) {
     geom_point(size = 3) +
     geom_line() +
     scale_shape_manual(values = shape_map) +
+    scale_color_discrete(
+      labels = function(x) {
+        parse(text = paste0("italic('B.')~italic('", x, "')"))
+      }
+    ) +
     coord_cartesian(ylim = c(0, 6.5)) +
     labs(
       title = paste("Group", group_name),
       x = "Consumer Storage Day",
-      y = "B. cereus concentration (log CFU/mL)",
+      y = expression(italic("B. cereus") ~ "concentration (log CFU/mL)"),
       color = "Species",
       shape = "Isolate"
     ) +
@@ -418,7 +424,8 @@ plots <- lapply(group_levels, function(g) {
   make_group_plot(dat, g)
 })
 names(plots) <- group_levels
-wrap_plots(plots)
+Figure_4 = wrap_plots(plots)
+ggsave("Figure 4.png", Figure_4, width = 12, height = 8, dpi = 600)
 
 net_grow <- dat %>%
   filter(Consumer.storage.day %in% c(0, 35)) %>%
@@ -493,14 +500,17 @@ Boxplot_d14 = final_results %>%
     name = "Data",
     values = c("Observed" = "red")
   ) +
+  scale_fill_discrete(
+    labels = function(x) parse(text = paste0("italic('", x, "')"))
+  ) +
   labs(
-    title = "Predicted vs Observed B. cereus group concentration (Day 14)",
     x = "Isolate",
     y = "Concentration (log CFU/mL)",
     fill = "Species"
   ) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggsave("Figure 5A.png", Boxplot_d14, width = 12, height = 6, dpi = 600)
  
 # Day 21
 exp_count_d21 = subset(N0_df, Consumer.storage.day == "21")
@@ -520,14 +530,17 @@ Boxplot_d21 = final_results %>%
     name = "Data",
     values = c("Observed" = "red")
   ) +
+  scale_fill_discrete(
+    labels = function(x) parse(text = paste0("italic('", x, "')"))
+  ) +
   labs(
-    title = "Predicted vs Observed B. cereus group concentration (Day 21)",
     x = "Isolate",
     y = "Concentration (log CFU/mL)",
     fill = "Species"
   ) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggsave("Figure 5B.png", Boxplot_d21, width = 12, height = 6, dpi = 600)
 
 # Day 35
 exp_count_d35 = subset(N0_df, Consumer.storage.day == "35")
@@ -547,14 +560,17 @@ Boxplot_d35 = final_results %>%
     name = "Data",
     values = c("Observed" = "red")
   ) +
+  scale_fill_discrete(
+    labels = function(x) parse(text = paste0("italic('", x, "')"))
+  ) +
   labs(
-    title = "Predicted vs Observed B. cereus group concentration (Day 35)",
     x = "Isolate",
     y = "Concentration (log CFU/mL)",
     fill = "Species"
   ) +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+ggsave("Figure 5C.png", Boxplot_d35, width = 12, height = 6, dpi = 600)
 
 # Calculate IQR
 iqr_by_isolate_time <- final_results %>%

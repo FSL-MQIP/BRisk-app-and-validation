@@ -320,7 +320,7 @@ server <- function(input, output) {
     finalhist<-finalhist+
       geom_histogram(data = df1,aes(fill=color),binwidth = 0.1, breaks = breaks)+
       scale_fill_manual(name = expression (italic(B~cereus)~"count per ml"), 
-                        values = c("Below 3 log"="springgreen3","Between 3 and 5 log"="darkorange1","Above 5 log"="red3"),
+                        values = c("Below 3 log"="#779ECC","Between 3 and 5 log"="#F2C894","Above 5 log"="#FF985A"),
                         breaks = c("Below 3 log", "Between 3 and 5 log", "Above 5 log"))+
       xlab("log CFU per ml") +
       ylab("Number of Units (log scale)") +
@@ -365,7 +365,7 @@ server <- function(input, output) {
             axis.text.x = element_text(size = 22),                    
             axis.text.y = element_text(size = 22),
             legend.text = element_text(size = 22)) +
-      scale_fill_manual(values = c("All Isolates" = "lightblue", "Phylogenetic Group" = "yellow"),
+      scale_fill_manual(values = c("All Isolates" = "#7CAA98", "Phylogenetic Group" = "#C8D6B9"),
                         labels = c("All Isolates", paste("Phylogenetic", df2$panC_Group, sep = " "))) +
       labs(fill = "")
   })
@@ -382,33 +382,33 @@ server <- function(input, output) {
     pct_above5 <- sum(logN > 5, na.rm = TRUE)/10000 * 100
     
     exposure <- if (pct_above5 >= 1) {
-      "Very High Exposure"
+      "Very High Exposure Level"
     } else if (any(logN > 5, na.rm = TRUE)) {
-      "High Exposure"
+      "High Exposure Level"
     } else if (any(logN > 3 & logN < 5, na.rm = TRUE)) {
-      "Medium Exposure"
+      "Medium Exposure Level"
     } else if (all(logN < 3, na.rm = TRUE)) {
-      "Low Exposure"
+      "Low Exposure Level"
     } else {
-      "Negligible Exposure"
+      "Negligible Exposure Level"
     }
     
     exposure_color <- case_when(
-      exposure == "Very High Exposure" ~ "red",
-      exposure == "High Exposure" ~ "darkorange",
-      exposure == "Medium Exposure" ~ "yellow",
-      exposure == "Low Exposure" ~ "green",
-      TRUE ~ "lightgreen"
+      exposure == "Very High Exposure Level" ~ "#FF985A",
+      exposure == "High Exposure Level" ~ "#FFB347",
+      exposure == "Medium Exposure Level" ~ "#F2C894",
+      exposure == "Low Exposure Level" ~ "#9FC0DE",
+      TRUE ~ "#779ECC"
     )
     
     # emetic
     emetic_potential <- screen_risks(df2$emetic_genes)
     emetic_color <- case_when(
-      grepl("Very High", emetic_potential) ~ "red",
-      grepl("High", emetic_potential) ~ "darkorange",
-      grepl("Medium", emetic_potential) ~ "yellow",
-      grepl("Low", emetic_potential) ~ "green",
-      TRUE ~ "lightgreen"
+      grepl("Very High", emetic_potential) ~ "#FF985A",
+      grepl("High", emetic_potential) ~ "#FFB347",
+      grepl("Medium", emetic_potential) ~ "#F2C894",
+      grepl("Low", emetic_potential) ~ "#9FC0CE",
+      TRUE ~ "#779ECC"
     )
     
     # diarrheal
@@ -430,67 +430,67 @@ server <- function(input, output) {
     )
     
     diarrheal_color <- case_when(
-      grepl("Very High", diarrheal_potential) ~ "red",
-      grepl("High", diarrheal_potential) ~ "darkorange",
-      grepl("Medium", diarrheal_potential) ~ "yellow",
-      grepl("Low", diarrheal_potential) ~ "green",
-      TRUE ~ "lightgreen"
+      grepl("Very High", diarrheal_potential) ~ "#FF985A",
+      grepl("High", diarrheal_potential) ~ "#FFB347",
+      grepl("Medium", diarrheal_potential) ~ "#F2C894",
+      grepl("Low", diarrheal_potential) ~ "#9FC0CE",
+      TRUE ~ "#779ECC"
     )
     
     # final risk score
-    if (exposure == "Negligible Exposure" ||
+    if (exposure == "Negligible Exposure Level" ||
         emetic_potential == "Negligible Emetic Disease Potential") {
       emetic_risk <- "Negligible Emetic Disease Risk"
     } else if (emetic_potential == "Low Emetic Disease Potential" &&
-               exposure == "Low Exposure") {
+               exposure == "Low Exposure Level") {
       emetic_risk <- "Low Emetic Disease Risk"
     } else if (emetic_potential == "Low Emetic Disease Potential" &&
-               (exposure == "Medium Exposure" || exposure == "High Exposure")) {
+               (exposure == "Medium Exposure Level" || exposure == "High Exposure")) {
       emetic_risk <- "Medium Emetic Disease Risk"
     } else if (emetic_potential == "Medium Emetic Disease Potential" &&
-               (exposure == "Low Exposure" || exposure == "Medium Exposure")) {
+               (exposure == "Low Exposure Level" || exposure == "Medium Exposure")) {
       emetic_risk <- "Medium Emetic Disease Risk"
     } else if (emetic_potential == "High Emetic Disease Potential" &&
-               exposure == "Low Exposure") {
+               exposure == "Low Exposure Level") {
       emetic_risk <- "Medium Emetic Disease Risk"
-    } else if (exposure == "Very High Exposure" &&
+    } else if (exposure == "Very High Exposure Level" &&
                emetic_potential == "High Emetic Disease Potential") {
       emetic_risk <- "Very High Emetic Disease Risk"
     } else if (emetic_potential == "Very High Emetic Disease Potential" &&
-               (exposure == "Medium Exposure" ||
-                exposure == "High Exposure" ||
-                exposure == "Very High Exposure")) {
+               (exposure == "Medium Exposure Level" ||
+                exposure == "High Exposure Level" ||
+                exposure == "Very High Exposure Level")) {
       emetic_risk <- "Very High Emetic Disease Risk"
     } else {
       emetic_risk <- "High Emetic Disease Risk"
     }
     
-    if (exposure == "Negligible Exposure") {
+    if (exposure == "Negligible Exposure Level") {
       diarrheal_risk <- "Negligible Diarrheal Disease Risk"
     } else if (
-      (exposure == "Very High Exposure" &&
+      (exposure == "Very High Exposure Level" &&
        diarrheal_potential == "High Diarrheal Disease Potential") ||
       (diarrheal_potential == "Very High Diarrheal Disease Potential" &&
-       exposure %in% c("Medium Exposure", "High Exposure", "Very High Exposure"))
+       exposure %in% c("Medium Exposure Level", "High Exposure Level", "Very High Exposure Level"))
     ) {
       diarrheal_risk <- "Very High Diarrheal Disease Risk"
     } else if (
       (diarrheal_potential == "Very Low Diarrheal Disease Potential" &&
-       exposure %in% c("Low Exposure", "Medium Exposure")) ||
+       exposure %in% c("Low Exposure Level", "Medium Exposure Level")) ||
       (diarrheal_potential == "Low Diarrheal Disease Potential" &&
-       exposure == "Low Exposure")
+       exposure == "Low Exposure Level")
     ) {
       diarrheal_risk <- "Low Diarrheal Disease Risk"
     } else if (
-      (exposure == "Very High Exposure" &&
+      (exposure == "Very High Exposure Level" &&
        diarrheal_potential %in% c("Low Diarrheal Disease Potential",
                                   "Medium Diarrheal Disease Potential")) ||
-      (exposure == "High Exposure" &&
+      (exposure == "High Exposure Level" &&
        diarrheal_potential %in% c("Medium Diarrheal Disease Potential",
                                   "High Diarrheal Disease Potential")) ||
-      (exposure == "Medium Exposure" &&
+      (exposure == "Medium Exposure Level" &&
        diarrheal_potential == "High Diarrheal Disease Potential") ||
-      (exposure == "Low Exposure" &&
+      (exposure == "Low Exposure Level" &&
        diarrheal_potential == "Very High Diarrheal Disease Potential")
     ) {
       diarrheal_risk <- "High Diarrheal Disease Risk"
@@ -499,27 +499,27 @@ server <- function(input, output) {
     }
     
     risk_color_emetic <- if (emetic_risk == "Very High Emetic Disease Risk") {
-      "red"
+      "#FF985A"
     } else if (emetic_risk == "High Emetic Disease Risk") {
-      "darkorange"
+      "#FFB347"
     } else if (emetic_risk == "Medium Emetic Disease Risk") {
-      "yellow"
+      "#F2C894"
     } else if (emetic_risk == "Low Emetic Disease Risk") {
-      "green"
+      "#9FC0CE"
     } else {
-      "lightgreen"
+      "#779ECC"
     }
     
     risk_color_diarrheal <- if (diarrheal_risk == "Very High Diarrheal Disease Risk") {
-      "red"
+      "#FF985A"
     } else if (diarrheal_risk == "High Diarrheal Disease Risk") {
-      "darkorange"
+      "#FFB347"
     } else if (diarrheal_risk == "Medium Diarrheal Disease Risk") {
-      "yellow"
+      "#F2C894"
     } else if (diarrheal_risk == "Low Diarrheal Disease Risk") {
-      "green"
+      "#9FC0CE"
     } else {
-      "lightgreen"
+      "#779ECC"
     }
     
     # print text

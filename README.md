@@ -20,7 +20,7 @@ All required packages are listed under the “Load packages” section of BRisk.
    
 Click Run App. The Shiny app should automatically launch in your browser.
 
-5. Input files for test runs are saved under:
+5. Input files for test runs are saved under:https://github.com/FSL-MQIP/BRisk-app-and-validation/tree/main/BRisk%20app/Genomic%20data%20for%20detected%20isolates
    
 For BRiskTyper result, upload files ending with "final_results.csv"
 

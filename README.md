@@ -6,17 +6,11 @@ How to run the BRisk app (with GitHub Desktop + RStudio)
 1. Clone the repository
 
 In GitHub Desktop:
-File → Clone Repository
-Select: FSL-MQIP/BRisk-app-and-validation
-Click Clone
+File → Clone Repository, Select: FSL-MQIP/BRisk-app-and-validation, Click Clone
 
 2. Open the app file in RStudio
    
-Open the cloned folder
-
-Go to: BRisk app/BRisk.R
-
-Open BRisk.R in RStudio
+Open the cloned folder, Go to: BRisk app/BRisk.R, Open BRisk.R in RStudio
 
 3. Install required packages
 
